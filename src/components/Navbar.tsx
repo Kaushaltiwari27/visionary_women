@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowRight, Play, Phone, Mail, MapPin } from 'lucide-react';
+import { Menu, X, ArrowRight, Phone, Mail, MapPin } from 'lucide-react';
 import { BRAND_INFO } from '../data/content';
 
 interface NavbarProps {
@@ -7,7 +7,7 @@ interface NavbarProps {
   onOpenVideo?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onOpenContact, onOpenVideo }) => {
+export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('about');
@@ -137,32 +137,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact, onOpenVideo }) =>
           })}
         </div>
 
-        {/* Right: High-Conversion Action CTAs (Safe Padding & Zero Truncation) */}
-        <div className="flex items-center space-x-2 sm:space-x-2.5 shrink-0">
-          {/* Brand Story Play Trigger */}
-          {onOpenVideo && (
-            <button
-              onClick={onOpenVideo}
-              className="relative p-2 rounded-full bg-navy-900/80 border border-vwTeal/40 text-vwTeal hover:bg-vwTeal hover:text-navy-950 transition-all duration-300 cursor-pointer shadow-sm shrink-0"
-              title="Watch Brand Story"
-            >
-              <span className="w-2 h-2 rounded-full bg-vwTeal absolute -top-0.5 -right-0.5 animate-ping" />
-              <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
-            </button>
-          )}
-
-          {/* Secondary CTA: Join Network (Gracefully adapts across resolutions) */}
-          <button
-            onClick={() => onOpenContact('professional')}
-            className="hidden sm:inline-flex items-center px-3.5 py-2 rounded-full border border-slate-700/80 hover:border-vwTeal/50 text-slate-200 hover:text-white hover:bg-white/5 text-xs font-montserrat font-semibold uppercase tracking-wider transition-all duration-200 cursor-pointer whitespace-nowrap shrink-0"
-          >
-            <span>Join Network</span>
-          </button>
-
+        {/* Right: High-Conversion Action CTA (Clean, 100% Visible, Never Cut Off) */}
+        <div className="flex items-center space-x-3 shrink-0">
           {/* Primary High-Impact CTA: Consult Us */}
           <button
             onClick={() => onOpenContact('business')}
-            className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-gradient-to-r from-vwYellow via-vwYellow-light to-vwYellow text-navy-950 font-montserrat font-extrabold uppercase tracking-wider text-xs hover:shadow-[0_0_22px_rgba(255,222,89,0.55)] hover:scale-105 active:scale-95 transition-all duration-200 flex items-center space-x-1.5 cursor-pointer shadow-md whitespace-nowrap shrink-0"
+            className="px-5 sm:px-6 py-2 sm:py-2.5 rounded-full bg-gradient-to-r from-vwYellow via-vwYellow-light to-vwYellow text-navy-950 font-montserrat font-extrabold uppercase tracking-wider text-xs hover:shadow-[0_0_24px_rgba(255,222,89,0.6)] hover:scale-105 active:scale-95 transition-all duration-200 flex items-center space-x-2 cursor-pointer shadow-md whitespace-nowrap shrink-0"
           >
             <span>Consult Us</span>
             <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
@@ -171,7 +151,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact, onOpenVideo }) =>
           {/* Mobile/Tablet Menu Hamburger Toggle (Visible below xl: 1280px) */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="xl:hidden p-2 rounded-full bg-navy-900/90 border border-navy-700 text-slate-200 hover:text-vwYellow focus:outline-none transition-colors ml-1 cursor-pointer shrink-0"
+            className="xl:hidden p-2 rounded-full bg-navy-900/90 border border-navy-700 text-slate-200 hover:text-vwYellow focus:outline-none transition-colors cursor-pointer shrink-0"
             aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
