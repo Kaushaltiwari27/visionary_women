@@ -7,7 +7,7 @@ interface WomenEmpowermentProps {
 
 export const WomenEmpowerment: React.FC<WomenEmpowermentProps> = ({ onOpenContact }) => {
   return (
-    <section id="empowerment" className="py-24 lg:py-32 bg-navy-950 relative overflow-hidden border-t border-navy-850">
+    <section id="empowerment" className="py-24 lg:py-32 bg-navy-950 relative overflow-hidden border-t border-navy-850 scroll-mt-28">
       {/* Warm Ambient Glows */}
       <div className="absolute top-1/3 left-10 w-[500px] h-[500px] bg-vwYellow/10 rounded-full blur-[160px] pointer-events-none" />
       <div className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-vwTeal/10 rounded-full blur-[160px] pointer-events-none" />

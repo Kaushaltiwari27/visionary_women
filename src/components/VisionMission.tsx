@@ -46,7 +46,7 @@ export const VisionMission: React.FC = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} id="vision" className="py-24 lg:py-32 bg-navy-900 relative overflow-hidden">
+    <section ref={sectionRef} id="vision" className="py-24 lg:py-32 bg-navy-900 relative overflow-hidden scroll-mt-28">
       {/* Background Decorative Elements */}
       <div className="absolute inset-0 bg-hero-gradient opacity-40 pointer-events-none" />
       <div className="absolute -top-32 right-1/4 w-[500px] h-[500px] bg-vwTeal/10 rounded-full blur-[140px] pointer-events-none" />

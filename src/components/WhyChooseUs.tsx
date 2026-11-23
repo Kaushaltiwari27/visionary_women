@@ -42,7 +42,7 @@ export const WhyChooseUs: React.FC<WhyChooseUsProps> = ({ onOpenContact }) => {
   };
 
   return (
-    <section id="why-us" className="py-24 lg:py-32 bg-navy-900 relative overflow-hidden border-t border-navy-850">
+    <section id="why-us" className="py-24 lg:py-32 bg-navy-900 relative overflow-hidden border-t border-navy-850 scroll-mt-28">
       {/* Background radial gradient */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-navy-950/60 rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute -bottom-20 right-0 w-96 h-96 bg-vwTeal/10 rounded-full blur-[130px] pointer-events-none" />

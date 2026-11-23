@@ -19,7 +19,7 @@ export const FuturePlan: React.FC = () => {
   };
 
   return (
-    <section id="future" className="py-24 lg:py-32 bg-navy-950 relative overflow-hidden border-t border-navy-850">
+    <section id="future" className="py-24 lg:py-32 bg-navy-950 relative overflow-hidden border-t border-navy-850 scroll-mt-28">
       {/* Background ambient lighting */}
       <div className="absolute top-1/2 left-1/4 w-[600px] h-[600px] bg-vwTeal/5 rounded-full blur-[160px] pointer-events-none" />
       <div className="absolute bottom-0 right-10 w-[500px] h-[500px] bg-vwYellow/5 rounded-full blur-[150px] pointer-events-none" />

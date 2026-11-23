@@ -70,7 +70,7 @@ export const BrandIntro: React.FC<BrandIntroProps> = ({ onOpenContact }) => {
   }, []);
 
   return (
-    <section ref={sectionRef} id="about" className="py-24 lg:py-32 bg-navy-950 relative overflow-hidden border-t border-navy-850">
+    <section ref={sectionRef} id="about" className="py-24 lg:py-32 bg-navy-950 relative overflow-hidden border-t border-navy-850 scroll-mt-28">
       {/* Background Subtle Ambient Glow */}
       <div className="absolute top-1/2 left-0 w-96 h-96 bg-vwTeal/5 rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute bottom-0 right-10 w-80 h-80 bg-vwOrange/5 rounded-full blur-[120px] pointer-events-none" />

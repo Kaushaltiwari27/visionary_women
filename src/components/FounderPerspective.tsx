@@ -6,7 +6,7 @@ export const FounderPerspective: React.FC = () => {
   const { founder } = BRAND_INFO;
 
   return (
-    <section id="founder" className="py-24 lg:py-32 bg-navy-900 relative overflow-hidden border-t border-navy-850">
+    <section id="founder" className="py-24 lg:py-32 bg-navy-900 relative overflow-hidden border-t border-navy-850 scroll-mt-28">
       {/* Background ambient glows */}
       <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-vwTeal/5 rounded-full blur-[160px] pointer-events-none" />
       <div className="absolute bottom-10 left-10 w-[500px] h-[500px] bg-vwYellow/5 rounded-full blur-[140px] pointer-events-none" />
