@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { ArrowRight, Play, Sparkles, ChevronDown } from 'lucide-react';
+import { ArrowRight, Sparkles, ChevronDown } from 'lucide-react';
 import gsap from 'gsap';
 import { ThreeHeroSculpture } from './ThreeHeroSculpture';
 
@@ -171,19 +171,6 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact, onOpenVideo }) => {
               >
                 <span>Join Our Network</span>
               </button>
-
-              {/* Brand Video Modal Button */}
-              {onOpenVideo && (
-                <button
-                  onClick={onOpenVideo}
-                  className="hero-cta-action inline-flex items-center space-x-2 px-3.5 py-3 text-slate-300 hover:text-vwYellow text-xs font-montserrat font-semibold uppercase tracking-wider transition-colors cursor-pointer"
-                >
-                  <span className="w-8 h-8 rounded-full bg-navy-850 border border-vwTeal/40 flex items-center justify-center text-vwTeal shadow-sm">
-                    <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
-                  </span>
-                  <span>Brand Story</span>
-                </button>
-              )}
             </div>
 
             {/* Metric Chips */}
