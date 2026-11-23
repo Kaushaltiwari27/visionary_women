@@ -74,42 +74,23 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
             : 'bg-navy-950/50 backdrop-blur-xl border border-white/10 shadow-[0_10px_35px_rgba(0,0,0,0.5)] px-3.5 py-2.5 sm:px-6 sm:py-3'
         }`}
       >
-        {/* Left: Brand Identity Lockup */}
+        {/* Left: Brand Identity Logo Mark */}
         <a
           href="#"
           onClick={(e) => {
             e.preventDefault();
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
-          className="flex items-center space-x-2.5 sm:space-x-3 group shrink-0"
+          className="flex items-center group shrink-0"
+          title="Visionary Women - Return to top"
         >
           {/* Circular Logo with Glow */}
-          <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full p-[1.5px] bg-gradient-to-tr from-vwTeal via-white to-vwOrange shadow-glow-teal transition-transform group-hover:scale-105 shrink-0">
+          <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full p-[1.5px] bg-gradient-to-tr from-vwTeal via-white to-vwOrange shadow-glow-teal transition-transform group-hover:scale-105 shrink-0">
             <img
               src="/assets/vw-logo.png"
-              alt="Visionary Women Logo"
+              alt="Visionary Women"
               className="w-full h-full object-contain rounded-full bg-navy-950 p-1"
             />
-          </div>
-
-          <div className="flex flex-col">
-            <div className="flex items-center space-x-1.5">
-              <span className="font-montserrat tracking-wide text-sm sm:text-base font-extrabold uppercase leading-tight text-white group-hover:text-vwYellow transition-colors whitespace-nowrap">
-                VISIONARY <span className="text-vwTeal">WOMEN</span>
-              </span>
-              <span className="w-1.5 h-1.5 rounded-full bg-vwTeal animate-pulse hidden sm:inline-block" />
-            </div>
-            
-            {/* Subtext shown cleanly only when space permits */}
-            <div className="hidden 2xl:flex items-center space-x-2">
-              <span className="text-[9px] tracking-[0.2em] uppercase font-bold text-slate-300 font-sans">
-                We Rise by Lifting Others
-              </span>
-              <span className="text-slate-600">•</span>
-              <span className="text-[9px] font-sans text-vwTeal font-medium">
-                Surat | Pune
-              </span>
-            </div>
           </div>
         </a>
 
