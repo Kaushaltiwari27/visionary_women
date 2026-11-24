@@ -1,210 +1,170 @@
 import React, { useEffect, useRef } from 'react';
-import { ArrowRight, Sparkles, ChevronDown } from 'lucide-react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 import gsap from 'gsap';
-import { ThreeHeroSculpture } from './ThreeHeroSculpture';
+import { BRAND_INFO } from '../data/content';
 
 interface HeroProps {
-  onOpenContact: (mode?: string, serviceTitle?: string) => void;
-  onOpenVideo?: () => void;
+  onOpenContact: (mode?: string) => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ onOpenContact, onOpenVideo }) => {
+export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
   const heroRef = useRef<HTMLDivElement>(null);
-  const headlineRef = useRef<HTMLHeadingElement>(null);
-  const cta1Ref = useRef<HTMLAnchorElement>(null);
-  const cta2Ref = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-      // Eyebrow entrance
       tl.fromTo(
-        '.hero-eyebrow-pill',
-        { y: -30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.9, delay: 0.1 }
+        '.hero-label',
+        { y: -16, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.7 }
       )
-      // Line by line clip-path headline reveal
       .fromTo(
-        '.hero-line-inner',
-        { y: '120%', opacity: 0 },
-        { y: '0%', opacity: 1, stagger: 0.14, duration: 1.1, ease: 'power3.out' },
-        '-=0.5'
+        '.hero-line',
+        { y: 40, opacity: 0 },
+        { y: 0, opacity: 1, stagger: 0.12, duration: 0.9 },
+        '-=0.3'
       )
-      // Supporting paragraph
       .fromTo(
-        '.hero-description-text',
-        { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8 },
-        '-=0.6'
-      )
-      // CTA buttons
-      .fromTo(
-        '.hero-cta-action',
-        { y: 25, opacity: 0, scale: 0.95 },
-        { y: 0, opacity: 1, scale: 1, stagger: 0.15, duration: 0.8 },
-        '-=0.5'
-      )
-      // Metric badges
-      .fromTo(
-        '.hero-metric-item',
+        '.hero-desc',
         { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.1, duration: 0.7 },
+        { y: 0, opacity: 1, duration: 0.7 },
+        '-=0.5'
+      )
+      .fromTo(
+        '.hero-cta',
+        { y: 16, opacity: 0 },
+        { y: 0, opacity: 1, stagger: 0.1, duration: 0.6 },
         '-=0.4'
       )
-      // 3D Sculpture entrance
       .fromTo(
-        '.hero-3d-sculpture',
-        { scale: 0.85, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 1.4, ease: 'power2.out' },
-        0.3
+        '.hero-image',
+        { opacity: 0, scale: 0.97 },
+        { opacity: 1, scale: 1, duration: 1.1, ease: 'power2.out' },
+        0.2
       );
 
-      // Scroll indicator gentle pulse
-      gsap.to('.hero-scroll-indicator', {
-        y: 8,
+      // Scroll indicator animation
+      gsap.to('.hero-scroll', {
+        y: 6,
         repeat: -1,
         yoyo: true,
-        duration: 1.4,
+        duration: 1.6,
         ease: 'sine.inOut',
       });
     }, heroRef);
 
-    // Magnetic effect on desktop buttons
-    const applyMagnetic = (elem: HTMLElement | null) => {
-      if (!elem || window.innerWidth < 1024) return;
-      const onMove = (e: MouseEvent) => {
-        const rect = elem.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        gsap.to(elem, { x: x * 0.35, y: y * 0.35, duration: 0.3, ease: 'power2.out' });
-      };
-      const onLeave = () => {
-        gsap.to(elem, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.3)' });
-      };
-      elem.addEventListener('mousemove', onMove);
-      elem.addEventListener('mouseleave', onLeave);
-      return () => {
-        elem.removeEventListener('mousemove', onMove);
-        elem.removeEventListener('mouseleave', onLeave);
-      };
-    };
-
-    const cleanup1 = applyMagnetic(cta1Ref.current);
-    const cleanup2 = applyMagnetic(cta2Ref.current);
-
-    return () => {
-      ctx.revert();
-      cleanup1?.();
-      cleanup2?.();
-    };
+    return () => ctx.revert();
   }, []);
 
   return (
     <section
       ref={heroRef}
-      className="relative min-h-screen pt-32 pb-24 lg:pt-40 lg:pb-32 flex items-center bg-navy-gradient overflow-hidden grain-overlay"
+      className="relative min-h-screen pt-24 pb-16 lg:pt-28 lg:pb-24 bg-white overflow-hidden flex items-center"
     >
-      {/* Cinematic Background Atmosphere */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[750px] h-[750px] bg-navy-800/35 rounded-full blur-[150px] pointer-events-none" />
-      <div className="absolute top-20 right-10 w-[550px] h-[550px] bg-vwTeal/12 rounded-full blur-[130px] pointer-events-none" />
-      <div className="absolute bottom-10 left-10 w-[550px] h-[550px] bg-vwOrange/10 rounded-full blur-[140px] pointer-events-none" />
+      {/* Subtle background pattern */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-brand-bgAlt" style={{ clipPath: 'polygon(15% 0, 100% 0, 100% 100%, 0% 100%)' }} />
+      </div>
 
-      {/* Decorative Grid Mesh */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)] pointer-events-none" />
+      {/* Gold accent line top */}
+      <div className="absolute top-0 left-0 right-0 h-[3px] bg-brand-gold opacity-80" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          
-          {/* Left Side: Editorial Typography & Magnetic CTAs (7 Cols) */}
-          <div className="lg:col-span-7 space-y-6 sm:space-y-8 text-center lg:text-left">
-            
-            {/* Small Eyebrow Badge */}
-            <div className="hero-eyebrow-pill inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-navy-900/90 border border-vwTeal/40 shadow-glow-teal text-xs font-montserrat font-bold tracking-[0.2em] uppercase text-vwTeal">
-              <Sparkles className="w-3.5 h-3.5 text-vwYellow animate-spin-slow" />
-              <span>WOMEN-LED PROFESSIONAL SERVICES</span>
-              <span className="text-slate-500">•</span>
-              <span className="text-slate-300 font-medium">SURAT | PUNE</span>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+
+          {/* Left: Text */}
+          <div className="space-y-7 text-center lg:text-left">
+
+            {/* Label */}
+            <div className="hero-label inline-flex items-center space-x-2">
+              <span className="w-8 h-[2px] bg-brand-gold" />
+              <span className="text-xs font-semibold uppercase tracking-[0.15em] text-brand-muted">
+                Women-Led Professional Services · Surat & Pune
+              </span>
             </div>
 
-            {/* Oversized Bold Headline with Line Clip-Path Reveals */}
-            <h1
-              ref={headlineRef}
-              className="text-4xl sm:text-6xl xl:text-7xl font-headline tracking-tight font-black uppercase text-white leading-[1.03]"
-            >
-              <div className="overflow-hidden py-0.5">
-                <span className="hero-line-inner block text-gradient-silver">Empowering</span>
-              </div>
-              <div className="overflow-hidden py-0.5">
-                <span className="hero-line-inner block text-vwTeal">Women.</span>
-              </div>
-              <div className="overflow-hidden py-0.5">
-                <span className="hero-line-inner block text-gradient-silver">Elevating</span>
-              </div>
-              <div className="overflow-hidden py-0.5">
-                <span className="hero-line-inner block text-gradient-gold">Businesses.</span>
-              </div>
+            {/* Headline */}
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-brand-navy leading-[1.1] tracking-tight">
+              <span className="hero-line block">Professional Services.</span>
+              <span className="hero-line block text-brand-gold">Built Around</span>
+              <span className="hero-line block">People.</span>
             </h1>
 
-            {/* Supporting Description */}
-            <p className="hero-description-text text-base sm:text-xl text-slate-300 font-normal leading-relaxed max-w-2xl mx-auto lg:mx-0 font-sans">
-              A dynamic, women-led platform empowering qualified professionals and delivering exceptional outsourced solutions to businesses.
+            {/* Supporting copy */}
+            <p className="hero-desc text-lg text-brand-muted leading-relaxed max-w-lg mx-auto lg:mx-0 font-normal">
+              Visionary Women provides accounting, taxation, compliance, and financial advisory services to businesses — while creating flexible professional opportunities for qualified women.
             </p>
 
-            {/* CTA Buttons */}
-            <div className="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-              {/* Primary CTA */}
-              <a
-                ref={cta1Ref}
-                href="#services"
-                className="hero-cta-action w-full sm:w-auto px-8 py-4 rounded-full bg-vwYellow text-navy-950 font-montserrat font-bold uppercase tracking-wider text-xs sm:text-sm hover:bg-vwYellow-hover hover:shadow-glow-yellow transition-all duration-300 flex items-center justify-center space-x-2 group cursor-pointer"
-              >
-                <span>Explore Our Services</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </a>
-
-              {/* Secondary CTA */}
+            {/* CTAs */}
+            <div className="hero-cta flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3">
               <button
-                ref={cta2Ref}
-                onClick={() => onOpenContact('professional')}
-                className="hero-cta-action w-full sm:w-auto px-8 py-4 rounded-full bg-transparent border border-white text-white font-montserrat font-bold uppercase tracking-wider text-xs sm:text-sm hover:bg-white hover:text-navy-950 hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2 cursor-pointer"
+                onClick={() => onOpenContact('business')}
+                className="hero-cta btn-gold w-full sm:w-auto flex items-center justify-center space-x-2 px-7 py-3.5 text-sm"
               >
-                <span>Join Our Network</span>
+                <span>For Businesses</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => onOpenContact('professional')}
+                className="hero-cta btn-navy-ghost w-full sm:w-auto flex items-center justify-center space-x-2 px-7 py-3.5 text-sm"
+              >
+                <span>For Women Professionals</span>
               </button>
             </div>
 
-            {/* Metric Chips */}
-            <div className="pt-6 border-t border-navy-800/80 grid grid-cols-3 gap-3 max-w-lg mx-auto lg:mx-0">
-              <div className="hero-metric-item bg-navy-900/60 border border-white/5 rounded-2xl p-3 text-center lg:text-left">
-                <div className="text-xl sm:text-2xl font-headline font-bold text-vwYellow">125+</div>
-                <div className="text-[10px] sm:text-[11px] uppercase tracking-wide text-slate-400 font-montserrat font-semibold">Years Acumen</div>
-              </div>
-              <div className="hero-metric-item bg-navy-900/60 border border-white/5 rounded-2xl p-3 text-center lg:text-left">
-                <div className="text-xl sm:text-2xl font-headline font-bold text-vwTeal">CA / CS</div>
-                <div className="text-[10px] sm:text-[11px] uppercase tracking-wide text-slate-400 font-montserrat font-semibold">Certified Leads</div>
-              </div>
-              <div className="hero-metric-item bg-navy-900/60 border border-white/5 rounded-2xl p-3 text-center lg:text-left">
-                <div className="text-xl sm:text-2xl font-headline font-bold text-white">Top 4</div>
-                <div className="text-[10px] sm:text-[11px] uppercase tracking-wide text-slate-400 font-montserrat font-semibold">Firm Vision</div>
-              </div>
+            {/* Trust notes */}
+            <div className="hero-cta flex flex-wrap items-center justify-center lg:justify-start gap-x-6 gap-y-2 pt-2">
+              {[
+                'CA & CS Qualified Leadership',
+                'Surat & Pune Offices',
+                'Pan-India Services',
+              ].map((item) => (
+                <div key={item} className="flex items-center space-x-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-brand-gold flex-shrink-0" />
+                  <span className="text-xs text-brand-muted font-medium">{item}</span>
+                </div>
+              ))}
             </div>
-
           </div>
 
-          {/* Right Side: Clean 3D Three.js Orbital Sculpture (5 Cols) */}
-          <div className="hero-3d-sculpture lg:col-span-5 relative flex items-center justify-center">
-            <ThreeHeroSculpture />
+          {/* Right: Founder Photo */}
+          <div className="hero-image flex justify-center lg:justify-end">
+            <div className="relative">
+              {/* Photo container */}
+              <div className="relative w-72 h-80 sm:w-80 sm:h-96 lg:w-96 lg:h-[480px] overflow-hidden rounded-2xl">
+                <img
+                  src={BRAND_INFO.founder.image}
+                  alt={BRAND_INFO.founder.name}
+                  className="w-full h-full object-cover object-top"
+                />
+                {/* Subtle overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/30 via-transparent to-transparent" />
+              </div>
+
+              {/* Founder name card */}
+              <div className="absolute -bottom-5 -left-5 bg-white border border-brand-border rounded-xl px-5 py-3.5 shadow-card-elevated">
+                <div className="font-semibold text-brand-navy text-sm">{BRAND_INFO.founder.name}</div>
+                <div className="text-xs text-brand-muted mt-0.5">{BRAND_INFO.founder.title}</div>
+              </div>
+
+              {/* Credential badge */}
+              <div className="absolute -top-4 -right-4 bg-brand-navy text-white text-xs font-semibold px-4 py-2 rounded-full shadow-card-elevated">
+                Mentor · ICAI Surat
+              </div>
+
+              {/* Decorative accent */}
+              <div className="absolute -z-10 -bottom-4 -right-4 w-full h-full border-2 border-brand-gold/30 rounded-2xl" />
+            </div>
           </div>
 
         </div>
       </div>
 
-      {/* Animated Scroll Down Indicator */}
-      <div className="hero-scroll-indicator absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center space-y-1.5 pointer-events-none opacity-80">
-        <span className="text-[10px] tracking-[0.25em] uppercase text-slate-400 font-bold">
-          SCROLL TO DISCOVER
-        </span>
-        <ChevronDown className="w-4 h-4 text-vwTeal" />
+      {/* Scroll indicator */}
+      <div className="hero-scroll absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center space-y-1.5 text-brand-muted">
+        <span className="text-[10px] uppercase tracking-[0.2em] font-medium">Scroll</span>
+        <ChevronDown className="w-4 h-4" />
       </div>
     </section>
   );

@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Phone, 
-  Mail, 
-  MapPin, 
-  Send, 
-  CheckCircle2, 
-  Sparkles, 
-  Building, 
-  UserCheck, 
-  Clock, 
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Send,
+  CheckCircle2,
+  Building2,
+  UserCheck,
+  Clock,
   ShieldCheck,
-  AlertCircle
 } from 'lucide-react';
 import { BRAND_INFO } from '../data/content';
 
@@ -19,19 +17,31 @@ interface ContactSectionProps {
   initialService?: string;
 }
 
-export const ContactSection: React.FC<ContactSectionProps> = ({ 
-  initialMode = 'business', 
-  initialService = '' 
+type FormData = {
+  name: string;
+  email: string;
+  phone: string;
+  company: string;
+  qualification: string;
+  expertise: string;
+  service: string;
+  message: string;
+};
+
+export const ContactSection: React.FC<ContactSectionProps> = ({
+  initialMode = 'business',
+  initialService = '',
 }) => {
   const [formType, setFormType] = useState<string>(initialMode);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
     phone: '',
     company: '',
     qualification: '',
-    interest: 'Business Services',
-    message: ''
+    expertise: '',
+    service: initialService || '',
+    message: '',
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -39,35 +49,24 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
-    if (initialMode) {
-      setFormType(initialMode);
-      if (initialMode === 'professional') {
-        setFormData(prev => ({ ...prev, interest: 'Professional Opportunities' }));
-      } else {
-        setFormData(prev => ({ 
-          ...prev, 
-          interest: 'Business Services',
-          message: initialService ? `Inquiring regarding: ${initialService}` : prev.message 
-        }));
-      }
+    if (initialMode) setFormType(initialMode);
+    if (initialService) {
+      setFormData((prev) => ({
+        ...prev,
+        message: `I would like to enquire about: ${initialService}`,
+        service: initialService,
+      }));
     }
   }, [initialMode, initialService]);
 
   const validate = () => {
     const errs: Record<string, string> = {};
-    if (!formData.name.trim()) errs.name = 'Full name is required';
-    if (!formData.email.trim()) {
-      errs.email = 'Email address is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      errs.email = 'Please enter a valid email';
-    }
-    if (!formData.phone.trim()) {
-      errs.phone = 'Phone number is required';
-    } else if (!/^[0-9+ -]{8,15}$/.test(formData.phone.trim())) {
-      errs.phone = 'Please enter a valid phone number';
-    }
-    if (!formData.message.trim()) errs.message = 'Please provide details for your inquiry';
-
+    if (!formData.name.trim()) errs.name = 'Name is required';
+    if (!formData.email.trim() || !/\S+@\S+\.\S+/.test(formData.email))
+      errs.email = 'Valid email required';
+    if (!formData.phone.trim() || !/^[0-9+ \-]{8,15}$/.test(formData.phone.trim()))
+      errs.phone = 'Valid phone number required';
+    if (!formData.message.trim()) errs.message = 'Please include a message';
     setErrors(errs);
     return Object.keys(errs).length === 0;
   };
@@ -75,80 +74,72 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
-
     setIsSubmitting(true);
-    // Simulate API submission
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
-    }, 1200);
+    }, 1000);
   };
 
   const resetForm = () => {
     setIsSubmitted(false);
     setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      company: '',
-      qualification: '',
-      interest: formType === 'professional' ? 'Professional Opportunities' : 'Business Services',
-      message: ''
+      name: '', email: '', phone: '', company: '',
+      qualification: '', expertise: '', service: '', message: '',
     });
     setErrors({});
   };
 
-  return (
-    <section id="contact" className="py-24 lg:py-32 bg-navy-950 relative overflow-hidden border-t border-navy-850 scroll-mt-28">
-      {/* Background ambient lighting */}
-      <div className="absolute top-1/3 left-10 w-[600px] h-[600px] bg-vwTeal/5 rounded-full blur-[160px] pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-[600px] h-[600px] bg-vwYellow/5 rounded-full blur-[160px] pointer-events-none" />
+  const inputClass = (field: string) =>
+    `w-full border rounded-lg px-4 py-2.5 text-sm text-brand-text placeholder-brand-muted/50 focus:outline-none focus:ring-2 transition-all bg-white ${
+      errors[field]
+        ? 'border-red-400 focus:ring-red-200'
+        : 'border-brand-border focus:border-brand-navy focus:ring-brand-navy/10'
+    }`;
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-navy-900 border border-vwTeal/30 text-xs font-montserrat font-bold uppercase tracking-[0.2em] text-vwTeal">
-            <Sparkles className="w-3.5 h-3.5 text-vwYellow" />
-            <span>START THE CONVERSATION</span>
-          </div>
-          <h2 className="text-3xl sm:text-5xl font-montserrat font-extrabold uppercase tracking-tight text-white leading-tight">
-            Let’s Build Something <br />
-            <span className="text-gradient-gold">Meaningful Together.</span>
+  const labelClass = 'block text-xs font-semibold text-brand-text mb-1.5 uppercase tracking-[0.08em]';
+
+  return (
+    <section
+      id="contact"
+      className="section-padding bg-brand-bgAlt scroll-mt-20"
+    >
+      <div className="section-container">
+
+        {/* Header */}
+        <div className="max-w-2xl mx-auto text-center mb-12 space-y-3">
+          <span className="section-label">Get In Touch</span>
+          <h2 className="section-heading">
+            Let's start a conversation
           </h2>
-          <p className="text-sm sm:text-base text-slate-300 font-sans leading-relaxed max-w-2xl mx-auto">
-            Whether you are a business looking for reliable professional services or a qualified woman professional seeking flexible opportunities, Visionary Women welcomes you.
+          <p className="text-brand-muted leading-relaxed text-sm sm:text-base">
+            Whether you need professional services for your business or would like to
+            join our professional network, we'd love to hear from you.
           </p>
         </div>
 
-        {/* Dual Tab Selector */}
-        <div className="flex justify-center mb-12">
-          <div className="bg-navy-900/90 p-1.5 rounded-full border border-navy-800 shadow-xl inline-flex space-x-2">
+        {/* Tab Switcher */}
+        <div className="flex justify-center mb-10">
+          <div className="bg-white border border-brand-border rounded-xl p-1 inline-flex shadow-card">
             <button
               type="button"
-              onClick={() => {
-                setFormType('business');
-                setFormData(prev => ({ ...prev, interest: 'Business Services' }));
-              }}
-              className={`px-6 py-2.5 rounded-full text-xs font-montserrat font-bold uppercase tracking-wider transition-all flex items-center space-x-2 cursor-pointer ${
+              onClick={() => setFormType('business')}
+              className={`flex items-center space-x-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all ${
                 formType === 'business'
-                  ? 'bg-vwYellow text-navy-950 shadow-glow-yellow'
-                  : 'text-slate-300 hover:text-white'
+                  ? 'bg-brand-navy text-white shadow-sm'
+                  : 'text-brand-muted hover:text-brand-text'
               }`}
             >
-              <Building className="w-4 h-4" />
-              <span>Discuss Business Requirements</span>
+              <Building2 className="w-4 h-4" />
+              <span>Business Enquiry</span>
             </button>
             <button
               type="button"
-              onClick={() => {
-                setFormType('professional');
-                setFormData(prev => ({ ...prev, interest: 'Professional Opportunities' }));
-              }}
-              className={`px-6 py-2.5 rounded-full text-xs font-montserrat font-bold uppercase tracking-wider transition-all flex items-center space-x-2 cursor-pointer ${
+              onClick={() => setFormType('professional')}
+              className={`flex items-center space-x-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all ${
                 formType === 'professional'
-                  ? 'bg-vwTeal text-navy-950 shadow-glow-teal'
-                  : 'text-slate-300 hover:text-white'
+                  ? 'bg-brand-gold text-white shadow-sm'
+                  : 'text-brand-muted hover:text-brand-text'
               }`}
             >
               <UserCheck className="w-4 h-4" />
@@ -157,257 +148,264 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
           </div>
         </div>
 
-        {/* Split Grid: Form & Contact Info */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-start">
-          
-          {/* Left Column: Premium Contact Form */}
-          <div className="lg:col-span-7 bg-navy-900/80 border border-navy-800 rounded-3xl p-7 sm:p-10 shadow-2xl relative">
-            
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+
+          {/* Form */}
+          <div className="lg:col-span-7 card-base p-6 sm:p-8">
+
             {isSubmitted ? (
-              <div className="py-12 text-center space-y-6">
-                <div className="w-16 h-16 rounded-full bg-vwTeal/20 text-vwTeal flex items-center justify-center mx-auto border border-vwTeal/40 shadow-glow-teal animate-bounce">
-                  <CheckCircle2 className="w-10 h-10" />
+              <div className="py-12 text-center space-y-5">
+                <div className="w-14 h-14 rounded-full bg-brand-gold/10 border border-brand-gold/20 text-brand-gold flex items-center justify-center mx-auto">
+                  <CheckCircle2 className="w-8 h-8" />
                 </div>
-                <div className="space-y-2">
-                  <h3 className="text-2xl font-headline font-bold uppercase text-white">
-                    Thank You for Connecting!
-                  </h3>
-                  <p className="text-sm text-slate-300 max-w-md mx-auto">
-                    Your inquiry has been received by CA Crispee Morakhiya and the Visionary Women leadership desk. We will contact you within 24 business hours.
+                <div>
+                  <h3 className="text-xl font-bold text-brand-navy">Thank you!</h3>
+                  <p className="text-sm text-brand-muted mt-2 max-w-sm mx-auto">
+                    Your message has been received. We will get back to you within 24 business hours.
                   </p>
                 </div>
-                <div className="p-4 bg-navy-950/80 rounded-xl border border-navy-800 text-xs text-vwTeal max-w-sm mx-auto">
-                  Priority response dispatched to: <strong>{formData.email}</strong>
+                <div className="bg-brand-bgAlt rounded-lg px-4 py-3 text-xs text-brand-muted inline-block">
+                  Response will be sent to <strong className="text-brand-text">{formData.email}</strong>
                 </div>
                 <button
                   onClick={resetForm}
-                  className="px-6 py-2.5 rounded-full bg-navy-800 hover:bg-navy-700 text-white text-xs font-semibold uppercase tracking-wider"
+                  className="btn-navy-ghost text-sm"
                 >
-                  Submit Another Inquiry
+                  Send Another Message
                 </button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">
-                
+
+                {/* Form title */}
+                <div className="pb-4 border-b border-brand-border">
+                  <h3 className="text-base font-bold text-brand-navy">
+                    {formType === 'business' ? 'Business Enquiry Form' : 'Professional Network Application'}
+                  </h3>
+                  <p className="text-xs text-brand-muted mt-1">
+                    {formType === 'business'
+                      ? 'Tell us about your business and what services you need.'
+                      : 'Tell us about your qualifications and what kind of work you are looking for.'}
+                  </p>
+                </div>
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   {/* Name */}
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-bold uppercase tracking-wider text-slate-300">
-                      Full Name <span className="text-vwOrange">*</span>
-                    </label>
+                  <div>
+                    <label className={labelClass}>Full Name *</label>
                     <input
                       type="text"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="e.g. Priya Sharma"
-                      className={`w-full bg-navy-950/90 border rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none transition-colors ${
-                        errors.name ? 'border-red-500 focus:border-red-500' : 'border-navy-800 focus:border-vwTeal'
-                      }`}
+                      placeholder="Your full name"
+                      className={inputClass('name')}
                     />
-                    {errors.name && <p className="text-[11px] text-red-400">{errors.name}</p>}
+                    {errors.name && <p className="text-xs text-red-500 mt-1">{errors.name}</p>}
                   </div>
 
                   {/* Email */}
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-bold uppercase tracking-wider text-slate-300">
-                      Email Address <span className="text-vwOrange">*</span>
-                    </label>
+                  <div>
+                    <label className={labelClass}>Email Address *</label>
                     <input
                       type="email"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="e.g. priya@example.com"
-                      className={`w-full bg-navy-950/90 border rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none transition-colors ${
-                        errors.email ? 'border-red-500 focus:border-red-500' : 'border-navy-800 focus:border-vwTeal'
-                      }`}
+                      placeholder="your@email.com"
+                      className={inputClass('email')}
                     />
-                    {errors.email && <p className="text-[11px] text-red-400">{errors.email}</p>}
+                    {errors.email && <p className="text-xs text-red-500 mt-1">{errors.email}</p>}
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   {/* Phone */}
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-bold uppercase tracking-wider text-slate-300">
-                      Phone Number <span className="text-vwOrange">*</span>
-                    </label>
+                  <div>
+                    <label className={labelClass}>Phone Number *</label>
                     <input
                       type="tel"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      placeholder="e.g. +91 94089 67987"
-                      className={`w-full bg-navy-950/90 border rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none transition-colors ${
-                        errors.phone ? 'border-red-500 focus:border-red-500' : 'border-navy-800 focus:border-vwTeal'
-                      }`}
+                      placeholder="+91 94089 67987"
+                      className={inputClass('phone')}
                     />
-                    {errors.phone && <p className="text-[11px] text-red-400">{errors.phone}</p>}
+                    {errors.phone && <p className="text-xs text-red-500 mt-1">{errors.phone}</p>}
                   </div>
 
-                  {/* Company / Qualification */}
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-bold uppercase tracking-wider text-slate-300">
-                      {formType === 'professional' ? 'Professional Qualification' : 'Company / Firm Name'}
-                    </label>
+                  {/* Company or Qualification */}
+                  {formType === 'business' ? (
+                    <div>
+                      <label className={labelClass}>Company / Firm Name</label>
+                      <input
+                        type="text"
+                        value={formData.company}
+                        onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                        placeholder="Your company name"
+                        className={inputClass('company')}
+                      />
+                    </div>
+                  ) : (
+                    <div>
+                      <label className={labelClass}>Qualification</label>
+                      <input
+                        type="text"
+                        value={formData.qualification}
+                        onChange={(e) => setFormData({ ...formData, qualification: e.target.value })}
+                        placeholder="e.g. CA / CS / CMA / M.Com"
+                        className={inputClass('qualification')}
+                      />
+                    </div>
+                  )}
+                </div>
+
+                {/* Service required (business) or Area of expertise (professional) */}
+                {formType === 'business' ? (
+                  <div>
+                    <label className={labelClass}>Service Required</label>
+                    <select
+                      value={formData.service}
+                      onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+                      className={inputClass('service')}
+                    >
+                      <option value="">Select a service...</option>
+                      <option value="Accounting & Bookkeeping">Accounting & Bookkeeping</option>
+                      <option value="Taxation & GST">Taxation & GST</option>
+                      <option value="Corporate Compliance">Corporate Compliance</option>
+                      <option value="Auditing">Auditing</option>
+                      <option value="Financial Advisory / Virtual CFO">Financial Advisory / Virtual CFO</option>
+                      <option value="Legal & Regulatory">Legal & Regulatory</option>
+                      <option value="Branding & Digital">Branding & Digital</option>
+                      <option value="Multiple Services">Multiple Services</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                ) : (
+                  <div>
+                    <label className={labelClass}>Area of Expertise</label>
                     <input
                       type="text"
-                      value={formType === 'professional' ? formData.qualification : formData.company}
-                      onChange={(e) => 
-                        formType === 'professional' 
-                          ? setFormData({ ...formData, qualification: e.target.value })
-                          : setFormData({ ...formData, company: e.target.value })
-                      }
-                      placeholder={formType === 'professional' ? 'e.g. CA / CS / CMA / M.Com' : 'e.g. Acme Enterprises'}
-                      className="w-full bg-navy-950/90 border border-navy-800 focus:border-vwTeal rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none transition-colors"
+                      value={formData.expertise}
+                      onChange={(e) => setFormData({ ...formData, expertise: e.target.value })}
+                      placeholder="e.g. Taxation, GST, Accounting, Compliance"
+                      className={inputClass('expertise')}
                     />
                   </div>
-                </div>
-
-                {/* Interest Dropdown */}
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-slate-300">
-                    I Am Interested In <span className="text-vwOrange">*</span>
-                  </label>
-                  <select
-                    value={formData.interest}
-                    onChange={(e) => setFormData({ ...formData, interest: e.target.value })}
-                    className="w-full bg-navy-950/90 border border-navy-800 focus:border-vwTeal rounded-xl px-4 py-3 text-sm text-white focus:outline-none transition-colors"
-                  >
-                    <option value="Business Services">Business Services (Accounting, Tax, Compliance)</option>
-                    <option value="Professional Opportunities">Professional Opportunities (Joining the Network)</option>
-                    <option value="Virtual CFO / Advisory">Financial & Virtual CFO Advisory</option>
-                    <option value="Partnerships">Institutional / CA Firm Partnerships</option>
-                    <option value="Other">Other Specific Inquiries</option>
-                  </select>
-                </div>
+                )}
 
                 {/* Message */}
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-slate-300">
-                    Message / Project Details <span className="text-vwOrange">*</span>
-                  </label>
+                <div>
+                  <label className={labelClass}>Message *</label>
                   <textarea
                     rows={4}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     placeholder={
-                      formType === 'professional'
-                        ? 'Tell us about your qualification, experience, and the kind of flexible opportunities you are seeking...'
-                        : 'Briefly describe your business outsourcing requirements, timelines, or scope of compliance...'
+                      formType === 'business'
+                        ? 'Briefly describe what you need help with...'
+                        : 'Tell us about your background, what kind of work you are looking for, and your availability...'
                     }
-                    className={`w-full bg-navy-950/90 border rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none transition-colors ${
-                      errors.message ? 'border-red-500 focus:border-red-500' : 'border-navy-800 focus:border-vwTeal'
-                    }`}
+                    className={inputClass('message')}
                   />
-                  {errors.message && <p className="text-[11px] text-red-400">{errors.message}</p>}
+                  {errors.message && <p className="text-xs text-red-500 mt-1">{errors.message}</p>}
                 </div>
 
-                {/* Submit Button */}
+                {/* Submit */}
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-4 rounded-xl bg-vwYellow text-navy-950 font-montserrat font-bold uppercase tracking-wider text-xs sm:text-sm hover:bg-vwYellow-hover hover:shadow-glow-yellow transition-all flex items-center justify-center space-x-2 disabled:opacity-50 cursor-pointer"
+                  className={`w-full py-3 rounded-lg font-semibold text-sm flex items-center justify-center space-x-2 transition-all ${
+                    formType === 'business'
+                      ? 'bg-brand-navy hover:bg-brand-navy/90 text-white'
+                      : 'bg-brand-gold hover:bg-vwGold-hover text-white'
+                  } disabled:opacity-60`}
                 >
                   {isSubmitting ? (
-                    <span>Processing Submission...</span>
+                    <span>Sending...</span>
                   ) : (
                     <>
-                      <span>{formType === 'professional' ? 'Submit Application to Network' : 'Discuss Your Requirements'}</span>
-                      <Send className="w-4 h-4 ml-1" />
+                      <span>
+                        {formType === 'business'
+                          ? 'Submit Business Enquiry'
+                          : 'Join Our Network'}
+                      </span>
+                      <Send className="w-4 h-4" />
                     </>
                   )}
                 </button>
 
-                <div className="flex items-center justify-center space-x-2 text-[11px] text-slate-400 pt-1">
-                  <ShieldCheck className="w-4 h-4 text-vwTeal" />
-                  <span>Confidentiality guaranteed. Protected under strict institutional NDA.</span>
+                <div className="flex items-center justify-center space-x-2 text-xs text-brand-muted">
+                  <ShieldCheck className="w-3.5 h-3.5 text-brand-gold" />
+                  <span>Your information is kept strictly confidential.</span>
                 </div>
 
               </form>
             )}
-
           </div>
 
-          {/* Right Column: Authentic Direct Contact Cards */}
-          <div className="lg:col-span-5 space-y-6">
-            
-            {/* Contact Card 1: Phone */}
-            <div className="bg-glass-card p-6 sm:p-7 rounded-3xl border border-navy-800 hover:border-vwTeal/40 transition-all flex items-start space-x-4">
-              <div className="w-12 h-12 rounded-2xl bg-vwTeal/15 border border-vwTeal/30 text-vwTeal flex items-center justify-center shrink-0">
-                <Phone className="w-6 h-6" />
+          {/* Contact Info */}
+          <div className="lg:col-span-5 space-y-5">
+
+            {/* Phone */}
+            <div className="card-base p-5 flex items-start space-x-4 hover:shadow-card-hover transition-all">
+              <div className="w-10 h-10 rounded-lg bg-brand-navy text-white flex items-center justify-center flex-shrink-0">
+                <Phone className="w-4 h-4" />
               </div>
-              <div className="space-y-1">
-                <span className="text-[11px] font-montserrat font-bold uppercase tracking-widest text-vwTeal">
-                  Direct Telephone
-                </span>
+              <div>
+                <div className="text-xs font-semibold uppercase tracking-[0.1em] text-brand-muted mb-1">Phone</div>
                 <a
                   href={`tel:${BRAND_INFO.phone}`}
-                  className="text-lg font-montserrat font-bold text-white hover:text-vwYellow transition-colors block"
+                  className="text-base font-semibold text-brand-navy hover:text-brand-gold transition-colors"
                 >
                   {BRAND_INFO.phone}
                 </a>
-                <p className="text-xs text-slate-400 font-sans">
-                  Direct Line for Inquiries & Corporate Consultations
-                </p>
+                <p className="text-xs text-brand-muted mt-0.5">Monday – Saturday, 9:30 AM – 6:30 PM</p>
               </div>
             </div>
 
-            {/* Contact Card 2: Email */}
-            <div className="bg-glass-card p-6 sm:p-7 rounded-3xl border border-navy-800 hover:border-vwTeal/40 transition-all flex items-start space-x-4">
-              <div className="w-12 h-12 rounded-2xl bg-vwTeal/15 border border-vwTeal/30 text-vwTeal flex items-center justify-center shrink-0">
-                <Mail className="w-6 h-6" />
+            {/* Email */}
+            <div className="card-base p-5 flex items-start space-x-4 hover:shadow-card-hover transition-all">
+              <div className="w-10 h-10 rounded-lg bg-brand-gold text-white flex items-center justify-center flex-shrink-0">
+                <Mail className="w-4 h-4" />
               </div>
-              <div className="space-y-1">
-                <span className="text-[11px] font-montserrat font-bold uppercase tracking-widest text-vwTeal">
-                  Official Email
-                </span>
+              <div>
+                <div className="text-xs font-semibold uppercase tracking-[0.1em] text-brand-muted mb-1">Email</div>
                 <a
                   href={`mailto:${BRAND_INFO.email}`}
-                  className="text-base sm:text-lg font-montserrat font-bold text-white hover:text-vwYellow transition-colors block break-all"
+                  className="text-sm font-semibold text-brand-navy hover:text-brand-gold transition-colors break-all"
                 >
                   {BRAND_INFO.email}
                 </a>
-                <p className="text-xs text-slate-400 font-sans">
-                  Quick turnaround within 24 business hours
-                </p>
+                <p className="text-xs text-brand-muted mt-0.5">Response within 24 business hours</p>
               </div>
             </div>
 
-            {/* Contact Card 3: Address & Locations */}
-            <div className="bg-glass-card p-6 sm:p-7 rounded-3xl border border-navy-800 hover:border-vwTeal/40 transition-all flex items-start space-x-4">
-              <div className="w-12 h-12 rounded-2xl bg-vwOrange/15 border border-vwOrange/30 text-vwOrange flex items-center justify-center shrink-0">
-                <MapPin className="w-6 h-6" />
+            {/* Address */}
+            <div className="card-base p-5 flex items-start space-x-4 hover:shadow-card-hover transition-all">
+              <div className="w-10 h-10 rounded-lg bg-brand-bgAlt border border-brand-border text-brand-navy flex items-center justify-center flex-shrink-0">
+                <MapPin className="w-4 h-4" />
               </div>
-              <div className="space-y-1">
-                <div className="flex items-center space-x-2">
-                  <span className="text-[11px] font-montserrat font-bold uppercase tracking-widest text-vwOrange">
-                    Primary Office
-                  </span>
-                  <span className="text-[10px] font-montserrat font-bold px-2 py-0.5 rounded-full bg-navy-950 border border-slate-700 text-slate-300">
-                    Surat | Pune
-                  </span>
+              <div>
+                <div className="text-xs font-semibold uppercase tracking-[0.1em] text-brand-muted mb-1">
+                  Office · Surat | Pune
                 </div>
-                <div className="text-sm font-montserrat font-semibold text-white leading-relaxed">
+                <div className="text-sm text-brand-text leading-relaxed">
                   {BRAND_INFO.address}
                 </div>
-                <p className="text-xs text-slate-400 font-sans">
-                  Surat Corporate Head Office • Serving Clients Pan-India & Globally
-                </p>
+                <p className="text-xs text-brand-muted mt-0.5">Pan-India services available</p>
               </div>
             </div>
 
-            {/* Office Hours Pill */}
-            <div className="bg-navy-900/60 p-5 rounded-2xl border border-navy-800/80 flex items-center space-x-3 text-xs text-slate-300">
-              <Clock className="w-5 h-5 text-vwYellow shrink-0" />
-              <div>
-                <strong className="text-white block">Operating Hours:</strong>
-                Monday to Saturday: 9:30 AM – 6:30 PM IST (Remote Teams On-Demand)
+            {/* Operating hours */}
+            <div className="card-base p-5 flex items-center space-x-3">
+              <Clock className="w-4 h-4 text-brand-gold flex-shrink-0" />
+              <div className="text-xs text-brand-muted">
+                <strong className="text-brand-text">Operating Hours:</strong>{' '}
+                Monday to Saturday, 9:30 AM – 6:30 PM IST
               </div>
             </div>
 
           </div>
 
         </div>
-
       </div>
     </section>
   );

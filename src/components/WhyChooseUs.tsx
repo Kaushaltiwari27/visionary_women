@@ -1,127 +1,164 @@
-import React from 'react';
-import { 
-  Users, 
-  MapPin, 
-  Award, 
-  UserCheck, 
-  Compass, 
-  ShieldCheck, 
-  Lightbulb, 
+import React, { useEffect, useRef } from 'react';
+import {
+  Users,
+  MapPin,
+  Award,
+  UserCheck,
+  Compass,
+  ShieldCheck,
+  Lightbulb,
   FileCheck2,
-  Sparkles,
   ArrowRight
 } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { BENEFITS_DATA, BenefitItem } from '../data/content';
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface WhyChooseUsProps {
   onOpenContact: (mode?: string) => void;
 }
 
+const getBenefitIcon = (name: string, className: string = 'w-4 h-4') => {
+  switch (name) {
+    case 'Users': return <Users className={className} />;
+    case 'MapPin': return <MapPin className={className} />;
+    case 'Award': return <Award className={className} />;
+    case 'UserCheck': return <UserCheck className={className} />;
+    case 'Compass': return <Compass className={className} />;
+    case 'ShieldCheck': return <ShieldCheck className={className} />;
+    case 'Lightbulb': return <Lightbulb className={className} />;
+    case 'FileCheck2': return <FileCheck2 className={className} />;
+    default: return <Award className={className} />;
+  }
+};
+
+// Clean descriptions without buzzwords
+const CLEAN_BENEFITS = [
+  {
+    id: 'exp',
+    iconName: 'Users',
+    title: 'Women-Led Leadership',
+    description: 'Led by CA Crispee Morakhiya and a team of qualified women professionals with deep expertise in Indian accounting standards, taxation, and compliance.',
+  },
+  {
+    id: 'presence',
+    iconName: 'MapPin',
+    title: 'Surat & Pune Presence',
+    description: 'Physical offices in Surat and Pune with the ability to serve clients remotely across India.',
+  },
+  {
+    id: 'track',
+    iconName: 'Award',
+    title: 'Reliable & Accurate',
+    description: 'Committed to accuracy, deadline adherence, and the highest professional standards in every engagement.',
+  },
+  {
+    id: 'personalized',
+    iconName: 'UserCheck',
+    title: 'Personalized Attention',
+    description: 'Every client works directly with a qualified senior professional who understands their specific business needs.',
+  },
+  {
+    id: 'guidance',
+    iconName: 'Compass',
+    title: 'Proactive Advisory',
+    description: 'We go beyond compliance — providing practical guidance that helps your business make better financial decisions.',
+  },
+  {
+    id: 'reliable',
+    iconName: 'ShieldCheck',
+    title: 'Confidential & Secure',
+    description: 'All client information is handled with strict confidentiality, backed by formal non-disclosure agreements.',
+  },
+  {
+    id: 'innovative',
+    iconName: 'Lightbulb',
+    title: 'Modern Approach',
+    description: 'We use current tools and methodologies to deliver efficient, cost-effective professional services.',
+  },
+  {
+    id: 'technical',
+    iconName: 'FileCheck2',
+    title: 'CA / CS / CMA Expertise',
+    description: 'Deep, current knowledge of Indian accounting standards, GST, direct tax, and corporate law.',
+  },
+];
+
 export const WhyChooseUs: React.FC<WhyChooseUsProps> = ({ onOpenContact }) => {
-  const getBenefitIcon = (name: string) => {
-    switch (name) {
-      case 'Users':
-        return <Users className="w-6 h-6" />;
-      case 'MapPin':
-        return <MapPin className="w-6 h-6" />;
-      case 'Award':
-        return <Award className="w-6 h-6" />;
-      case 'UserCheck':
-        return <UserCheck className="w-6 h-6" />;
-      case 'Compass':
-        return <Compass className="w-6 h-6" />;
-      case 'ShieldCheck':
-        return <ShieldCheck className="w-6 h-6" />;
-      case 'Lightbulb':
-        return <Lightbulb className="w-6 h-6" />;
-      case 'FileCheck2':
-        return <FileCheck2 className="w-6 h-6" />;
-      default:
-        return <Sparkles className="w-6 h-6" />;
-    }
-  };
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        '.why-card',
+        { y: 28, opacity: 0 },
+        {
+          y: 0, opacity: 1, stagger: 0.07, duration: 0.7, ease: 'power3.out',
+          scrollTrigger: { trigger: '.why-grid', start: 'top 82%' }
+        }
+      );
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section id="why-us" className="py-24 lg:py-32 bg-navy-900 relative overflow-hidden border-t border-navy-850 scroll-mt-28">
-      {/* Background radial gradient */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-navy-950/60 rounded-full blur-[150px] pointer-events-none" />
-      <div className="absolute -bottom-20 right-0 w-96 h-96 bg-vwTeal/10 rounded-full blur-[130px] pointer-events-none" />
+    <section
+      ref={sectionRef}
+      id="why-us"
+      className="section-padding bg-white scroll-mt-20"
+    >
+      <div className="section-container">
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-navy-950 border border-vwTeal/30 text-xs font-montserrat font-bold uppercase tracking-[0.2em] text-vwTeal">
-            <Sparkles className="w-3.5 h-3.5 text-vwYellow" />
-            <span>INSTITUTIONAL DIFFERENTIATORS</span>
-          </div>
-          <h2 className="text-3xl sm:text-5xl font-montserrat font-extrabold uppercase tracking-tight text-white leading-tight">
-            WHY <span className="text-gradient-gold">VISIONARY WOMEN?</span>
+        {/* Header */}
+        <div className="max-w-2xl mx-auto text-center mb-12 space-y-3">
+          <span className="section-label">Why Work With Us</span>
+          <h2 className="section-heading">
+            What sets us apart
           </h2>
-          <p className="text-sm sm:text-base text-slate-300 font-sans leading-relaxed">
-            Combining high-level Chartered Accountant precision with modern agility, proactive empathy, and strict corporate governance.
+          <p className="text-brand-muted leading-relaxed text-sm sm:text-base">
+            A professional firm you can rely on — qualified, careful, and genuinely invested
+            in your success.
           </p>
         </div>
 
-        {/* 8 Features Interactive Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {BENEFITS_DATA.map((benefit: BenefitItem, idx: number) => (
+        {/* Benefits Grid */}
+        <div className="why-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {CLEAN_BENEFITS.map((benefit) => (
             <div
               key={benefit.id}
-              className="bg-glass-card rounded-2xl p-6 sm:p-7 border border-navy-800 hover:border-vwTeal/50 transition-all duration-300 flex flex-col justify-between group shadow-card-elevated hover:-translate-y-1"
+              className="why-card card-base p-5 space-y-3 hover:shadow-card-hover hover:-translate-y-0.5 transition-all duration-300 group"
             >
-              <div className="space-y-4">
-                
-                {/* Header with Icon and Badge */}
-                <div className="flex items-center justify-between">
-                  <div className="w-12 h-12 rounded-xl bg-vwTeal/15 border border-vwTeal/30 text-vwTeal flex items-center justify-center group-hover:scale-110 transition-transform group-hover:bg-vwTeal group-hover:text-navy-950">
-                    {getBenefitIcon(benefit.iconName)}
-                  </div>
-                  {benefit.badge && (
-                    <span className="text-[10px] font-montserrat font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-navy-950 border border-vwYellow/40 text-vwYellow">
-                      {benefit.badge}
-                    </span>
-                  )}
-                </div>
-
-                {/* Title */}
-                <h3 className="text-lg font-montserrat font-bold text-white group-hover:text-vwYellow transition-colors leading-snug">
-                  {benefit.title}
-                </h3>
-
-                {/* Description */}
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans">
-                  {benefit.description}
-                </p>
-
+              <div className="w-9 h-9 rounded-lg bg-brand-navy text-white flex items-center justify-center group-hover:bg-brand-gold transition-colors duration-300">
+                {getBenefitIcon(benefit.iconName)}
               </div>
-
-              {/* Number watermark */}
-              <div className="mt-4 pt-3 border-t border-navy-800/80 flex justify-between items-center text-[11px] font-montserrat font-bold text-slate-400 group-hover:text-vwTeal transition-colors">
-                <span>BENEFIT 0{idx + 1}</span>
-                <span className="text-vwTeal opacity-0 group-hover:opacity-100 transition-opacity">✓</span>
-              </div>
-
+              <h3 className="text-sm font-semibold text-brand-navy leading-snug">
+                {benefit.title}
+              </h3>
+              <p className="text-xs text-brand-muted leading-relaxed">
+                {benefit.description}
+              </p>
             </div>
           ))}
         </div>
 
-        {/* Institutional Trust Banner below grid */}
-        <div className="mt-14 bg-navy-950/80 rounded-2xl p-6 sm:p-8 border border-navy-800 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="space-y-1 text-center md:text-left">
-            <h4 className="text-lg font-montserrat font-bold text-white tracking-wide">
-              Strict Non-Disclosure & Data Security Standard
-            </h4>
-            <p className="text-xs sm:text-sm text-slate-400 font-sans">
-              Every client engagement is guarded by ironclad confidentiality agreements, SOC/ISO-aligned protocols, and dedicated project isolation.
+        {/* Bottom CTA */}
+        <div className="mt-12 pt-10 border-t border-brand-border flex flex-col sm:flex-row items-center justify-between gap-5">
+          <div>
+            <div className="text-base font-semibold text-brand-navy mb-1">
+              Strict confidentiality, always.
+            </div>
+            <p className="text-sm text-brand-muted">
+              Every engagement is covered by a formal confidentiality agreement and secure data handling.
             </p>
           </div>
           <button
             onClick={() => onOpenContact('business')}
-            className="shrink-0 px-6 py-3 rounded-full bg-vwYellow text-navy-950 font-montserrat font-bold uppercase tracking-wider text-xs hover:bg-vwYellow-hover hover:shadow-glow-yellow transition-all flex items-center space-x-2 cursor-pointer"
+            className="btn-gold flex items-center space-x-2 flex-shrink-0"
           >
-            <span>Partner With Our Firm</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <span>Start a Conversation</span>
+            <ArrowRight className="w-4 h-4" />
           </button>
         </div>
 

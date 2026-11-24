@@ -1,200 +1,152 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowRight, Phone, Mail, MapPin } from 'lucide-react';
+import { Menu, X, ArrowRight, Phone } from 'lucide-react';
 import { BRAND_INFO } from '../data/content';
 
 interface NavbarProps {
   onOpenContact: (mode?: string) => void;
-  onOpenVideo?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState<string>('about');
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 25);
-
-      // Active section detection with balanced threshold
-      const sectionIds = ['about', 'vision', 'services', 'why-us', 'empowerment', 'gallery', 'future', 'founder', 'contact'];
-      const scrollPos = window.scrollY + 180;
-
-      for (let i = sectionIds.length - 1; i >= 0; i--) {
-        const el = document.getElementById(sectionIds[i]);
-        if (el && scrollPos >= el.offsetTop) {
-          setActiveSection(sectionIds[i]);
-          break;
-        }
-      }
+      setIsScrolled(window.scrollY > 20);
     };
-
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Programmatic smooth scroll with fixed header offset
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault();
     setMobileMenuOpen(false);
-
     const targetEl = document.getElementById(targetId);
     if (targetEl) {
-      const headerOffset = 95;
+      const headerOffset = 80;
       const elementPos = targetEl.getBoundingClientRect().top;
       const offsetPos = elementPos + window.pageYOffset - headerOffset;
-
-      window.scrollTo({
-        top: offsetPos,
-        behavior: 'smooth'
-      });
-      setActiveSection(targetId);
-      window.history.pushState(null, '', `#${targetId}`);
+      window.scrollTo({ top: offsetPos, behavior: 'smooth' });
     }
   };
 
   const navLinks = [
+    { name: 'Home', id: '' },
     { name: 'About', id: 'about' },
-    { name: 'Vision', id: 'vision' },
     { name: 'Services', id: 'services' },
-    { name: 'Why Us', id: 'why-us' },
-    { name: 'Empowerment', id: 'empowerment' },
-    { name: 'Gallery', id: 'gallery' },
-    { name: 'Roadmap', id: 'future' },
-    { name: 'Founder', id: 'founder' },
+    { name: 'For Businesses', id: 'for-businesses' },
+    { name: 'For Women', id: 'empowerment' },
+    { name: 'Contact', id: 'contact' },
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-3 sm:px-6 lg:px-8 pt-3 sm:pt-4">
-      {/* Floating Island Capsule */}
-      <nav
-        className={`w-full max-w-7xl mx-auto rounded-full transition-all duration-500 ease-out flex items-center justify-between ${
-          isScrolled
-            ? 'bg-navy-950/90 backdrop-blur-2xl border border-vwTeal/30 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.85),0_0_25px_rgba(71,200,191,0.15)] px-3.5 py-2 sm:px-6 sm:py-2.5'
-            : 'bg-navy-950/50 backdrop-blur-xl border border-white/10 shadow-[0_10px_35px_rgba(0,0,0,0.5)] px-3.5 py-2.5 sm:px-6 sm:py-3'
-        }`}
-      >
-        {/* Left: Brand Identity Logo Mark */}
-        <a
-          href="#"
-          onClick={(e) => {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }}
-          className="flex items-center group shrink-0"
-          title="Visionary Women - Return to top"
-        >
-          {/* Circular Logo with Glow */}
-          <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full p-[1.5px] bg-gradient-to-tr from-vwTeal via-white to-vwOrange shadow-glow-teal transition-transform group-hover:scale-105 shrink-0">
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? 'bg-white shadow-[0_1px_12px_rgba(23,32,51,0.08)] border-b border-brand-border'
+          : 'bg-white/95'
+      }`}
+    >
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 lg:h-18">
+
+          {/* Logo */}
+          <a
+            href="/"
+            onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); setMobileMenuOpen(false); }}
+            className="flex items-center space-x-2.5 group flex-shrink-0"
+            title="Visionary Women"
+          >
             <img
               src="/assets/vw-logo.png"
               alt="Visionary Women"
-              className="w-full h-full object-contain rounded-full bg-navy-950 p-1"
+              className="w-9 h-9 object-contain"
             />
-          </div>
-        </a>
+            <div className="flex flex-col leading-none">
+              <span className="font-bold text-brand-navy text-sm tracking-wide">
+                VISIONARY WOMEN
+              </span>
+              <span className="text-[10px] text-brand-muted tracking-wider font-medium">
+                Professional Services
+              </span>
+            </div>
+          </a>
 
-        {/* Center: Desktop Navigation Links (Responsive Breakpoint at xl: 1280px) */}
-        <div className="hidden xl:flex items-center space-x-1 bg-navy-900/60 border border-white/10 rounded-full px-2.5 py-1 shadow-inner">
-          {navLinks.map((link) => {
-            const isActive = activeSection === link.id;
-            return (
+          {/* Desktop Nav Links */}
+          <div className="hidden lg:flex items-center space-x-1">
+            {navLinks.map((link) => (
               <a
-                key={link.id}
-                href={`#${link.id}`}
-                onClick={(e) => scrollToSection(e, link.id)}
-                className={`relative px-3 py-1.5 rounded-full text-xs font-montserrat font-semibold tracking-wider uppercase transition-all duration-200 whitespace-nowrap cursor-pointer ${
-                  isActive
-                    ? 'text-vwYellow bg-white/10 shadow-sm font-bold'
-                    : 'text-slate-300 hover:text-white hover:bg-white/5'
-                }`}
+                key={link.name}
+                href={link.id ? `#${link.id}` : '/'}
+                onClick={(e) => link.id ? scrollToSection(e, link.id) : (e.preventDefault(), window.scrollTo({ top: 0, behavior: 'smooth' }))}
+                className="px-3.5 py-2 text-sm font-medium text-brand-muted hover:text-brand-navy transition-colors rounded-lg hover:bg-brand-bgAlt whitespace-nowrap"
               >
                 {link.name}
-                {isActive && (
-                  <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-3.5 h-[2px] bg-vwYellow rounded-full" />
-                )}
               </a>
-            );
-          })}
-        </div>
+            ))}
+          </div>
 
-        {/* Right: High-Conversion Action CTA (Clean, 100% Visible, Never Cut Off) */}
-        <div className="flex items-center space-x-3 shrink-0">
-          {/* Primary High-Impact CTA: Consult Us */}
-          <button
-            onClick={() => onOpenContact('business')}
-            className="px-5 sm:px-6 py-2 sm:py-2.5 rounded-full bg-gradient-to-r from-vwYellow via-vwYellow-light to-vwYellow text-navy-950 font-montserrat font-extrabold uppercase tracking-wider text-xs hover:shadow-[0_0_24px_rgba(255,222,89,0.6)] hover:scale-105 active:scale-95 transition-all duration-200 flex items-center space-x-2 cursor-pointer shadow-md whitespace-nowrap shrink-0"
-          >
-            <span>Consult Us</span>
-            <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
-          </button>
+          {/* Desktop CTA */}
+          <div className="hidden lg:flex items-center space-x-3">
+            <a
+              href={`tel:${BRAND_INFO.phone}`}
+              className="text-sm text-brand-muted hover:text-brand-navy transition-colors flex items-center space-x-1.5 font-medium"
+            >
+              <Phone className="w-3.5 h-3.5" />
+              <span>{BRAND_INFO.phone}</span>
+            </a>
+            <button
+              onClick={() => onOpenContact('business')}
+              className="btn-gold flex items-center space-x-2"
+            >
+              <span>Contact Us</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
 
-          {/* Mobile/Tablet Menu Hamburger Toggle (Visible below xl: 1280px) */}
+          {/* Mobile Menu Toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="xl:hidden p-2 rounded-full bg-navy-900/90 border border-navy-700 text-slate-200 hover:text-vwYellow focus:outline-none transition-colors cursor-pointer shrink-0"
-            aria-label="Toggle navigation menu"
+            className="lg:hidden p-2 rounded-lg text-brand-text hover:bg-brand-bgAlt transition-colors"
+            aria-label="Toggle menu"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </nav>
 
-      {/* Responsive Glass Mobile/Tablet Drawer */}
+      {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="xl:hidden mt-2 mx-auto max-w-7xl bg-navy-950/98 backdrop-blur-2xl border border-vwTeal/30 rounded-3xl shadow-2xl p-5 sm:p-6 transition-all duration-300 animate-fadeIn">
-          {/* Navigation Links Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pb-5 border-b border-navy-800">
+        <div className="lg:hidden border-t border-brand-border bg-white animate-fadeIn">
+          <div className="max-w-7xl mx-auto px-4 py-4 space-y-1">
             {navLinks.map((link) => (
               <a
-                key={link.id}
-                href={`#${link.id}`}
-                onClick={(e) => scrollToSection(e, link.id)}
-                className={`px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-montserrat font-semibold transition-colors flex items-center justify-between cursor-pointer ${
-                  activeSection === link.id
-                    ? 'bg-vwTeal/20 text-vwYellow border border-vwTeal/40'
-                    : 'bg-navy-900/60 hover:bg-navy-900 text-slate-200 hover:text-vwYellow'
-                }`}
+                key={link.name}
+                href={link.id ? `#${link.id}` : '/'}
+                onClick={(e) => link.id ? scrollToSection(e, link.id) : (e.preventDefault(), window.scrollTo({ top: 0, behavior: 'smooth' }), setMobileMenuOpen(false))}
+                className="block px-4 py-3 text-sm font-medium text-brand-text hover:bg-brand-bgAlt rounded-lg transition-colors"
               >
-                <span>{link.name}</span>
-                <span className="text-slate-500 text-xs">→</span>
+                {link.name}
               </a>
             ))}
-          </div>
-
-          {/* Dual Action CTAs in Mobile Menu */}
-          <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenContact('business');
-              }}
-              className="w-full py-3 rounded-xl bg-gradient-to-r from-vwYellow to-vwYellow-hover text-navy-950 font-montserrat font-extrabold uppercase tracking-wider text-xs shadow-glow-yellow flex items-center justify-center space-x-2 cursor-pointer"
-            >
-              <span>Discuss Business Requirements</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenContact('professional');
-              }}
-              className="w-full py-3 rounded-xl border border-vwTeal text-vwTeal hover:bg-vwTeal/10 font-montserrat font-bold uppercase tracking-wider text-xs flex items-center justify-center space-x-2 transition-colors cursor-pointer"
-            >
-              <span>Join As Qualified Professional (CA / CS / CMA)</span>
-            </button>
-          </div>
-
-          {/* Direct Support Micro Bar */}
-          <div className="mt-4 pt-3 border-t border-navy-850 flex items-center justify-between text-xs text-slate-400 font-sans">
-            <span className="flex items-center space-x-1.5 text-vwTeal">
-              <MapPin className="w-3.5 h-3.5" />
-              <span>Surat | Pune</span>
-            </span>
-            <div className="flex items-center space-x-4">
-              <a href={`tel:${BRAND_INFO.phone}`} className="hover:text-vwYellow transition-colors flex items-center space-x-1">
-                <Phone className="w-3.5 h-3.5 text-vwYellow" />
-                <span>{BRAND_INFO.phone}</span>
+            <div className="pt-3 pb-1 border-t border-brand-border mt-3 space-y-2">
+              <button
+                onClick={() => { setMobileMenuOpen(false); onOpenContact('business'); }}
+                className="w-full btn-gold text-center justify-center"
+              >
+                Discuss Your Requirements
+              </button>
+              <button
+                onClick={() => { setMobileMenuOpen(false); onOpenContact('professional'); }}
+                className="w-full btn-navy-ghost text-center justify-center"
+              >
+                Join Our Network
+              </button>
+            </div>
+            <div className="pt-3 border-t border-brand-border flex items-center space-x-2 text-xs text-brand-muted px-2">
+              <Phone className="w-3.5 h-3.5" />
+              <a href={`tel:${BRAND_INFO.phone}`} className="hover:text-brand-navy transition-colors">
+                {BRAND_INFO.phone}
               </a>
             </div>
           </div>

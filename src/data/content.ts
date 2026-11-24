@@ -39,7 +39,12 @@ export const BRAND_INFO = {
   email: "visionarywomen1809@gmail.com",
   locations: ["Surat", "Pune"],
   address: "408-415, Homeland City, Piplod, Surat 395007",
-  combinedExperience: "125+ Years",
+  // Statistics to be updated with verified data:
+  stats: {
+    clientsServed: null,
+    womenInNetwork: null,
+    yearsOfExperience: null,
+  },
   founder: {
     name: "CA Crispee Morakhiya",
     title: "Founder & Chartered Accountant",
@@ -60,7 +65,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     id: "accounting",
     category: "Accounting Services",
     title: "Accounting & Financial Operations",
-    shortDesc: "End-to-end bookkeeping, payroll management, and institutional office support designed for scaling enterprises.",
+    shortDesc: "Bookkeeping, payroll management, and accounting operations for businesses of all sizes.",
     iconName: "Calculator",
     accentColor: "#47C8BF",
     features: [
@@ -80,7 +85,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     id: "compliance",
     category: "Secretarial Compliance",
     title: "Corporate & Secretarial Governance",
-    shortDesc: "Comprehensive ROC compliance, entity registration, board governance, and statutory secretarial filings.",
+    shortDesc: "Company incorporation, ROC compliance, secretarial filings, and corporate governance support.",
     iconName: "Building2",
     accentColor: "#FF8F00",
     features: [
@@ -100,7 +105,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     id: "taxation",
     category: "Tax, Regulatory & Advisory",
     title: "Taxation & Institutional Auditing",
-    shortDesc: "Strategic direct and indirect tax management, GST reconciliation, audit readiness, assessments, and appeals.",
+    shortDesc: "Income tax, GST, TDS filings and advisory. Audit services including statutory, internal, and tax audits.",
     iconName: "Scale",
     accentColor: "#FFDE59",
     features: [
@@ -122,7 +127,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     id: "advisory",
     category: "Financial & Business Advisory",
     title: "Strategic Advisory & Virtual CFO",
-    shortDesc: "Board-level virtual CFO services, complex financial modeling, project funding, and Ind AS technical advisory.",
+    shortDesc: "Financial modelling, forecasting, project finance, Virtual CFO services, and strategic financial advisory.",
     iconName: "Briefcase",
     accentColor: "#47C8BF",
     features: [
@@ -143,7 +148,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     id: "legal",
     category: "Legal & Regulatory Services",
     title: "Legal, RERA & Regulatory Defense",
-    shortDesc: "Direct tax litigation, RERA real estate adherence, FEMA foreign exchange compliance, and IP protection.",
+    shortDesc: "Legal support covering RERA, FEMA, IEC, trademark filings, commercial agreements, and regulatory compliance.",
     iconName: "Gavel",
     accentColor: "#FF8F00",
     features: [
@@ -164,7 +169,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     id: "digital",
     category: "Branding & Digital Services",
     title: "Corporate Identity & Executive Digital",
-    shortDesc: "Executive branding, LinkedIn authority building, corporate presentations, and strategic content creation.",
+    shortDesc: "Corporate branding, content writing, social media marketing, and company profile creation.",
     iconName: "Megaphone",
     accentColor: "#FFDE59",
     features: [
@@ -188,57 +193,49 @@ export const BENEFITS_DATA: BenefitItem[] = [
   {
     id: "exp",
     title: "Women-Led Expertise",
-    badge: "125+ Years",
-    description: "Led by seasoned qualified women professionals with 125+ years of combined experience across corporate finance and advisory.",
+    description: "Led by CA Crispee Morakhiya and a team of qualified women professionals with deep expertise in Indian accounting standards, taxation, and compliance.",
     iconName: "Users"
   },
   {
     id: "presence",
     title: "Pan-India Presence",
-    badge: "Surat & Pune Hubs",
-    description: "Serving marquee enterprises, startups, and CA firms across India with dual physical hubs and remote execution.",
+    description: "Physical offices in Surat and Pune. Serving businesses and professionals across India through remote work arrangements.",
     iconName: "MapPin"
   },
   {
     id: "track",
-    title: "Proven Track Record",
-    badge: "Precision & Speed",
-    description: "Delivering institutional-grade services with immaculate precision, strict deadline adherence, and zero tolerance for error.",
+    title: "Reliable & Accurate",
+    description: "We are committed to accuracy, meeting deadlines, and maintaining the highest professional standards in every engagement.",
     iconName: "Award"
   },
   {
     id: "personalized",
     title: "Personalized Service",
-    badge: "Dedicated Lead",
-    description: "Every client gets direct access to senior professionals who tailor solutions to their unique business ecosystem.",
+    description: "Every client works directly with a qualified senior professional who understands their specific business requirements.",
     iconName: "UserCheck"
   },
   {
     id: "guidance",
-    title: "Strategic Guidance",
-    badge: "Proactive Advisory",
-    description: "We don't merely crunch numbers; we provide proactive strategic counsel that shapes high-impact leadership decisions.",
+    title: "Proactive Advisory",
+    description: "We go beyond compliance — providing practical guidance that helps your business make better financial decisions.",
     iconName: "Compass"
   },
   {
     id: "reliable",
-    title: "Reliable & Efficient",
-    badge: "Ironclad NDAs",
-    description: "Trustworthy service delivery with rigorous confidentiality protocols maintained through binding NDAs and secure data systems.",
+    title: "Confidential & Secure",
+    description: "All client information is handled with strict confidentiality, backed by formal non-disclosure agreements.",
     iconName: "ShieldCheck"
   },
   {
     id: "innovative",
-    title: "Innovative Solutions",
-    badge: "Growth Catalyst",
-    description: "Forward-thinking methodologies and modern technological toolchains tailored to unlock business scalability.",
+    title: "Modern Approach",
+    description: "We use current tools and methodologies to deliver efficient, cost-effective professional services.",
     iconName: "Lightbulb"
   },
   {
     id: "technical",
-    title: "Technical Expertise",
-    badge: "CA / CS / CMA",
-    description: "In-depth, up-to-the-minute mastery of Indian accounting standards, GST case laws, direct tax codes, and ROC regulations.",
+    title: "CA / CS / CMA Expertise",
+    description: "Deep, current knowledge of Indian accounting standards, GST law, direct taxation, and corporate compliance regulations.",
     iconName: "FileCheck2"
   }
 ];

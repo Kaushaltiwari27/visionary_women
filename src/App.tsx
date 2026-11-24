@@ -1,25 +1,19 @@
 import React, { useState } from 'react';
-import { Loader } from './components/Loader';
-import { CustomCursor } from './components/CustomCursor';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { BrandIntro } from './components/BrandIntro';
 import { VisionMission } from './components/VisionMission';
-import { PinnedStory } from './components/PinnedStory';
 import { ServicesShowcase } from './components/ServicesShowcase';
-import { WhyChooseUs } from './components/WhyChooseUs';
+import { ForBusinesses } from './components/ForBusinesses';
 import { WomenEmpowerment } from './components/WomenEmpowerment';
-import { GallerySection } from './components/GallerySection';
-import { GoalsSection } from './components/GoalsSection';
-import { FuturePlan } from './components/FuturePlan';
+import { WhyChooseUs } from './components/WhyChooseUs';
 import { FounderPerspective } from './components/FounderPerspective';
+import { FuturePlan } from './components/FuturePlan';
+import { GallerySection } from './components/GallerySection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
-import { VideoModal } from './components/VideoModal';
 
 export function App() {
-  const [loadingComplete, setLoadingComplete] = useState(false);
-  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [contactMode, setContactMode] = useState<string>('business');
   const [selectedServiceForInquiry, setSelectedServiceForInquiry] = useState<string>('');
 
@@ -33,74 +27,51 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen bg-navy-950 text-white selection:bg-vwTeal selection:text-navy-950 font-sans antialiased overflow-x-hidden">
-      {/* Cinematic Full-Screen Initial Loader */}
-      {!loadingComplete && (
-        <Loader onComplete={() => setLoadingComplete(true)} />
-      )}
+    <div className="min-h-screen bg-white text-brand-text font-sans antialiased overflow-x-hidden">
+      {/* Navigation */}
+      <Navbar onOpenContact={handleOpenContact} />
 
-      {/* Desktop Custom Glowing Cursor */}
-      <CustomCursor />
-
-      {/* Luxury Navigation */}
-      <Navbar
-        onOpenContact={handleOpenContact}
-        onOpenVideo={() => setIsVideoModalOpen(true)}
-      />
-
-      {/* Main Experience Flow */}
+      {/* Main Content */}
       <main>
-        {/* Section 1: Hero */}
-        <Hero
-          onOpenContact={handleOpenContact}
-          onOpenVideo={() => setIsVideoModalOpen(true)}
-        />
+        {/* Hero */}
+        <Hero onOpenContact={handleOpenContact} />
 
-        {/* Section 2: Brand Introduction (About) */}
+        {/* About — Brand Introduction */}
         <BrandIntro onOpenContact={handleOpenContact} />
 
-        {/* Section 3: Vision & Mission */}
+        {/* Vision & Mission */}
         <VisionMission />
 
-        {/* Section 3.5: Pinned Transformation Storyline */}
-        <PinnedStory onOpenContact={handleOpenContact} />
-
-        {/* Section 4: 3D Interactive Services Showcase */}
+        {/* Services */}
         <ServicesShowcase onOpenContact={handleOpenContact} />
 
-        {/* Section 5: Why Visionary Women */}
-        <WhyChooseUs onOpenContact={handleOpenContact} />
+        {/* For Businesses */}
+        <ForBusinesses onOpenContact={handleOpenContact} />
 
-        {/* Section 6: Women Empowerment Manifesto */}
+        {/* For Women Professionals */}
         <WomenEmpowerment onOpenContact={handleOpenContact} />
 
-        {/* Section 6.5: Curated Brand & Leadership Visual Gallery */}
+        {/* Gallery */}
         <GallerySection />
 
-        {/* Section 7: Our Goals */}
-        <GoalsSection />
+        {/* Why Choose Us */}
+        <WhyChooseUs onOpenContact={handleOpenContact} />
 
-        {/* Section 8: Future Plan Roadmap */}
+        {/* Future Roadmap */}
         <FuturePlan />
 
-        {/* Section 9: Founder's Perspective */}
+        {/* Founder */}
         <FounderPerspective />
 
-        {/* Section 10: Contact & Consultation */}
+        {/* Contact */}
         <ContactSection
           initialMode={contactMode}
           initialService={selectedServiceForInquiry}
         />
       </main>
 
-      {/* Section 11: Footer */}
-      <Footer />
-
-      {/* Interactive Video Modal for Logo Reveal */}
-      <VideoModal
-        isOpen={isVideoModalOpen}
-        onClose={() => setIsVideoModalOpen(false)}
-      />
+      {/* Footer */}
+      <Footer onOpenContact={handleOpenContact} />
     </div>
   );
 }
