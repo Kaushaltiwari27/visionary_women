@@ -6,12 +6,12 @@ import { VisionMission } from './components/VisionMission';
 import { ServicesShowcase } from './components/ServicesShowcase';
 import { ForBusinesses } from './components/ForBusinesses';
 import { WomenEmpowerment } from './components/WomenEmpowerment';
-import { WhyChooseUs } from './components/WhyChooseUs';
 import { FounderPerspective } from './components/FounderPerspective';
 import { FuturePlan } from './components/FuturePlan';
 import { GallerySection } from './components/GallerySection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
+import { WhatsAppButton } from './components/WhatsAppButton';
 
 export function App() {
   const [contactMode, setContactMode] = useState<string>('business');
@@ -54,9 +54,6 @@ export function App() {
         {/* Gallery */}
         <GallerySection />
 
-        {/* Why Choose Us */}
-        <WhyChooseUs onOpenContact={handleOpenContact} />
-
         {/* Future Roadmap */}
         <FuturePlan />
 
@@ -72,6 +69,9 @@ export function App() {
 
       {/* Footer */}
       <Footer onOpenContact={handleOpenContact} />
+
+      {/* WhatsApp Floating Button */}
+      <WhatsAppButton />
     </div>
   );
 }
