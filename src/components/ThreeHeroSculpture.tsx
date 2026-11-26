@@ -301,8 +301,8 @@ export const ThreeHeroSculpture: React.FC = () => {
           <div className="absolute inset-8 rounded-full border border-[#FFDE59]/40 animate-spin-reverse" />
           <div className="relative w-44 h-44 rounded-full bg-gradient-to-tr from-[#01155B] to-[#010521] border border-[#47C8BF] shadow-glow-teal flex items-center justify-center p-3">
             <img
-              src="/assets/vw-logo.png"
-              alt="Visionary Women 3D Fallback"
+              src="/assets/vw-logo-tm.png"
+              alt="Visionary Women™ 3D Fallback"
               className="w-full h-full object-contain filter drop-shadow-[0_0_20px_rgba(71,200,191,0.5)]"
             />
           </div>

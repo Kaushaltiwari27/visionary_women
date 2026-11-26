@@ -124,9 +124,9 @@ export const HeroVisualCenterpiece: React.FC<HeroVisualProps> = ({ onOpenVideo, 
               <div className="flex items-center space-x-3">
                 <div className="relative w-12 h-12 rounded-full p-0.5 bg-gradient-to-tr from-vwTeal via-white to-vwOrange shadow-glow-teal shrink-0">
                   <img
-                    src="/assets/vw-logo.png"
-                    alt="Visionary Women"
-                    className="w-full h-full object-contain rounded-full bg-navy-950"
+                    src="/assets/vw-logo-tm.png"
+                    alt="Visionary Women™"
+                    className="w-full h-full object-contain rounded-full bg-white p-0.5"
                   />
                 </div>
                 <div>

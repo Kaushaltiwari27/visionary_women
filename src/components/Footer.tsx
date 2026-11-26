@@ -1,6 +1,6 @@
 import React from 'react';
-import { Phone, Mail, MapPin, ArrowUp } from 'lucide-react';
-import { BRAND_INFO, SERVICES_DATA } from '../data/content';
+import { Phone, Mail, MapPin, ArrowUp, ExternalLink, Linkedin, Youtube, MessageCircle, Star, Globe } from 'lucide-react';
+import { BRAND_INFO, SERVICES_DATA, SOCIAL_LINKS, USEFUL_LINKS } from '../data/content';
 
 interface FooterProps {
   onOpenContact?: (mode?: string) => void;
@@ -27,15 +27,17 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
           {/* Brand Column */}
           <div className="lg:col-span-4 space-y-5">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-lg bg-white/10 border border-white/20 p-1.5 flex-shrink-0">
+              <div className="w-11 h-11 rounded-xl bg-white p-1 flex-shrink-0 shadow-sm">
                 <img
-                  src="/assets/vw-logo.png"
-                  alt="Visionary Women Logo"
+                  src="/assets/vw-logo-tm.png"
+                  alt="Visionary Women™ Logo"
                   className="w-full h-full object-contain"
                 />
               </div>
               <div>
-                <div className="font-bold text-white tracking-wide text-sm">VISIONARY WOMEN</div>
+                <div className="font-bold text-white tracking-wide text-sm flex items-start">
+                  VISIONARY WOMEN<sup className="text-[9px] font-bold text-brand-gold ml-0.5 leading-none">™</sup>
+                </div>
                 <div className="text-xs text-white/50 mt-0.5 font-medium">Professional Services</div>
               </div>
             </div>
@@ -48,6 +50,36 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
 
             <div className="text-xs text-white/40 italic font-medium">
               "{BRAND_INFO.tagline}"
+            </div>
+
+            {/* Social Links */}
+            <div className="flex flex-wrap items-center gap-2 pt-1">
+              {SOCIAL_LINKS.map((item) => {
+                const Icon =
+                  item.platform === 'linkedin'
+                    ? Linkedin
+                    : item.platform === 'youtube'
+                    ? Youtube
+                    : item.platform === 'whatsapp'
+                    ? MessageCircle
+                    : item.platform === 'google'
+                    ? Star
+                    : Globe;
+                return (
+                  <a
+                    key={item.id}
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={`${item.label} — ${item.description}`}
+                    aria-label={item.label}
+                    className="inline-flex items-center space-x-1.5 px-2.5 py-1.5 rounded-lg bg-white/10 hover:bg-brand-gold text-white/80 hover:text-white text-xs font-medium transition-all"
+                  >
+                    <Icon className="w-3.5 h-3.5 flex-shrink-0" />
+                    <span>{item.label}</span>
+                  </a>
+                );
+              })}
             </div>
 
             {/* Contact quick links */}
@@ -85,6 +117,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
                 { label: 'Services', id: 'services' },
                 { label: 'For Businesses', id: 'for-businesses' },
                 { label: 'For Women', id: 'empowerment' },
+                { label: 'Google Reviews', id: 'reviews' },
                 { label: 'Our Team', id: 'founder' },
                 { label: 'Contact', id: 'contact' },
               ].map((link) => (
@@ -119,15 +152,27 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
             </ul>
           </div>
 
-          {/* Enquiries */}
+          {/* Community & Useful Links */}
           <div className="lg:col-span-3 space-y-4">
             <h4 className="text-xs font-bold uppercase tracking-[0.15em] text-white/40">
-              Get In Touch
+              Community & Useful Links
             </h4>
-            <div className="space-y-3">
-              <p className="text-xs text-white/50 leading-relaxed">
-                For business enquiries or to join our professional network, reach out using the form or contact us directly.
-              </p>
+            <ul className="space-y-2.5 text-xs">
+              {USEFUL_LINKS.map((link) => (
+                <li key={link.id}>
+                  <a
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-1.5 text-white/65 hover:text-brand-gold transition-colors"
+                  >
+                    <ExternalLink className="w-3 h-3 flex-shrink-0" />
+                    <span>{link.label}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <div className="pt-2 space-y-2">
               <button
                 onClick={() => onOpenContact?.('business')}
                 className="w-full py-2.5 px-4 rounded-lg bg-brand-gold hover:bg-vwGold-hover text-white text-xs font-semibold transition-colors text-center"

@@ -32,7 +32,7 @@ export interface FuturePlanItem {
 }
 
 export const BRAND_INFO = {
-  name: "VISIONARY WOMEN",
+  name: "VISIONARY WOMEN™",
   tagline: "We Rise by Lifting Others",
   eyebrow: "WOMEN-LED PROFESSIONAL SERVICES",
   phone: "+91 9408967987",
@@ -286,4 +286,123 @@ export const FUTURE_PLAN_DATA: FuturePlanItem[] = [
     description: "Empowering qualified women CAs, CSs, and CMAs to ascend into Board Member, Independent Director, and Virtual CFO leadership roles across India Inc.",
     tag: "C-Suite Impact"
   }
+];
+
+export interface ExternalLinkItem {
+  id: string;
+  label: string;
+  description: string;
+  url: string;
+  category: 'social' | 'community' | 'resource';
+  platform: 'linkedin' | 'youtube' | 'whatsapp' | 'google' | 'linktree' | 'form' | 'website' | 'email';
+}
+
+export const SOCIAL_LINKS: ExternalLinkItem[] = [
+  {
+    id: 'linkedin',
+    label: 'LinkedIn',
+    description: 'Visionary Women Official Page',
+    url: 'https://www.linkedin.com/company/visionary-women-surat/',
+    category: 'social',
+    platform: 'linkedin',
+  },
+  {
+    id: 'youtube',
+    label: 'YouTube',
+    description: 'Sessions, AI & Finance Tutorials',
+    url: 'https://www.youtube.com/@VisionaryWomen',
+    category: 'social',
+    platform: 'youtube',
+  },
+  {
+    id: 'whatsapp-channel',
+    label: 'WhatsApp Channel',
+    description: 'Official Updates & Announcements',
+    url: 'https://www.whatsapp.com/channel/0029VbB4imq2kNFgmpeaWV1m',
+    category: 'social',
+    platform: 'whatsapp',
+  },
+  {
+    id: 'whatsapp-founder',
+    label: 'WhatsApp Founder',
+    description: 'Chat directly with CA Crispee Morakhiya',
+    url: 'https://wa.me/919408967987',
+    category: 'social',
+    platform: 'whatsapp',
+  },
+  {
+    id: 'google-reviews',
+    label: 'Google Reviews',
+    description: '4.9★ Rated (108+ Reviews)',
+    url: 'https://share.google/upXMuIG9IzhorIIWs',
+    category: 'social',
+    platform: 'google',
+  },
+  {
+    id: 'linktree',
+    label: 'Linktree',
+    description: 'All Official Links in One Place',
+    url: 'https://linktr.ee/visionarywomen1809',
+    category: 'social',
+    platform: 'linktree',
+  },
+];
+
+export const USEFUL_LINKS: ExternalLinkItem[] = [
+  {
+    id: 'sessions-form',
+    label: 'Recorded or Live Sessions Form',
+    description: 'Register for upcoming live workshops or request recorded sessions',
+    url: 'https://docs.google.com/forms/d/e/1FAIpQLSe4QdRcawZV16KieoHKluu8zfFE0RZr4w0wew_2hGeaRgLxvg/viewform?pli=1',
+    category: 'resource',
+    platform: 'form',
+  },
+  {
+    id: 'skill-bridge-site',
+    label: 'Skill Bridge Network',
+    description: 'A Learning Space by Visionary Women',
+    url: 'https://untitled-ssqjogx.gamma.site/',
+    category: 'resource',
+    platform: 'website',
+  },
+  {
+    id: 'vw-whatsapp-community',
+    label: 'Visionary Women WhatsApp Community',
+    description: 'Official community hub for updates and collaboration',
+    url: 'https://chat.whatsapp.com/BVfWpRHCPqHE5U5ednNgsv',
+    category: 'community',
+    platform: 'whatsapp',
+  },
+  {
+    id: 'vw-females-group',
+    label: 'Visionary Women Group (Females)',
+    description: 'Dedicated WhatsApp group for qualified women professionals',
+    url: 'https://chat.whatsapp.com/Exw0KyoW6S98yn7hCx0211?s=cl&p=a&mlu=4&ilr=4&iam=2',
+    category: 'community',
+    platform: 'whatsapp',
+  },
+  {
+    id: 'networking-wings',
+    label: 'Networking Wings (Females Only)',
+    description: 'Connect, collaborate, and grow with peers across cities',
+    url: 'https://chat.whatsapp.com/BGhGsGX8KdiI597tb9yZhS?s=cl&p=a&mlu=4&ilr=4&iam=2',
+    category: 'community',
+    platform: 'whatsapp',
+  },
+  {
+    id: 'skill-bridge-whatsapp',
+    label: 'Skill Bridge Network Open Group',
+    description: 'Open WhatsApp group for learning, AI & accounting workshops',
+    url: 'https://chat.whatsapp.com/En089kxTfDo9KpNxHMhEDD?s=cl&p=a&mlu=4&ilr=4&iam=2',
+    category: 'community',
+    platform: 'whatsapp',
+  },
+  {
+    id: 'google-profile',
+    label: 'Google Business Profile',
+    description: 'Read verified reviews & directions on Google',
+    url: 'https://g.co/kgs/QZdU6QG',
+    category: 'resource',
+    platform: 'google',
+  },
 ];

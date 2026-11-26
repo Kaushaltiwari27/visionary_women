@@ -167,11 +167,11 @@ export const Loader: React.FC<LoaderProps> = ({ onComplete }) => {
           {/* Center Brand Logo */}
           <div
             ref={logoRef}
-            className="w-20 h-20 sm:w-24 sm:h-24 rounded-full p-1 bg-[#010521] border border-[#47C8BF]/30 shadow-[0_0_30px_rgba(71,200,191,0.25)] flex items-center justify-center overflow-hidden"
+            className="w-20 h-20 sm:w-24 sm:h-24 rounded-full p-1.5 bg-white border border-[#47C8BF]/30 shadow-[0_0_30px_rgba(71,200,191,0.25)] flex items-center justify-center overflow-hidden"
           >
             <img
-              src="/assets/vw-logo.png"
-              alt="Visionary Women"
+              src="/assets/vw-logo-tm.png"
+              alt="Visionary Women™"
               className="w-full h-full object-contain"
             />
           </div>

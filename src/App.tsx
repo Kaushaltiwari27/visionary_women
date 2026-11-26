@@ -9,6 +9,7 @@ import { WomenEmpowerment } from './components/WomenEmpowerment';
 import { FounderPerspective } from './components/FounderPerspective';
 import { FuturePlan } from './components/FuturePlan';
 import { GallerySection } from './components/GallerySection';
+import { ReviewsSection } from './components/ReviewsSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { WhatsAppButton } from './components/WhatsAppButton';
@@ -59,6 +60,9 @@ export function App() {
 
         {/* Founder */}
         <FounderPerspective />
+
+        {/* Google Reviews */}
+        <ReviewsSection />
 
         {/* Contact */}
         <ContactSection
