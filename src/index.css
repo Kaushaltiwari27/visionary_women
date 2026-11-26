@@ -140,3 +140,24 @@
 input, textarea, select {
   font-family: 'DM Sans', sans-serif;
 }
+
+/* Smooth infinite horizontal marquee for Google Reviews */
+@keyframes reviewsMarquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.reviews-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: reviewsMarquee 75s linear infinite;
+  will-change: transform;
+}
+
+.reviews-marquee-wrapper:hover .reviews-marquee-track {
+  animation-play-state: paused;
+}

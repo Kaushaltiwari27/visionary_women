@@ -152,10 +152,10 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
             </ul>
           </div>
 
-          {/* Community & Useful Links */}
+          {/* Community & Programs */}
           <div className="lg:col-span-3 space-y-4">
             <h4 className="text-xs font-bold uppercase tracking-[0.15em] text-white/40">
-              Community & Useful Links
+              Programs & Community
             </h4>
             <ul className="space-y-2.5 text-xs">
               {USEFUL_LINKS.map((link) => (

@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react';
-import { ArrowRight, Clock, Users, Award, ShieldCheck } from 'lucide-react';
+import { ArrowRight, Clock, Users, Award, ShieldCheck, ExternalLink, CalendarCheck } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { USEFUL_LINKS } from '../data/content';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -110,7 +111,7 @@ export const WomenEmpowerment: React.FC<WomenEmpowermentProps> = ({ onOpenContac
             </div>
 
             {/* CTAs */}
-            <div className="flex flex-col xs:flex-row gap-3 pt-1">
+            <div className="flex flex-wrap gap-3 pt-1">
               <button
                 onClick={() => onOpenContact('professional')}
                 className="btn-gold flex items-center justify-center space-x-2 w-full xs:w-auto"
@@ -119,11 +120,14 @@ export const WomenEmpowerment: React.FC<WomenEmpowermentProps> = ({ onOpenContac
                 <ArrowRight className="w-4 h-4" />
               </button>
               <a
-                href="#founder"
-                onClick={(e) => { e.preventDefault(); document.getElementById('founder')?.scrollIntoView({ behavior: 'smooth' }); }}
+                href={USEFUL_LINKS[0].url}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn-navy-ghost flex items-center justify-center space-x-2 w-full xs:w-auto"
               >
-                <span>Meet Our Founder</span>
+                <CalendarCheck className="w-4 h-4" />
+                <span>Register for Sessions</span>
+                <ExternalLink className="w-3.5 h-3.5" />
               </a>
             </div>
           </div>

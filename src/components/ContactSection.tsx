@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Phone, Mail, MapPin, Send, CheckCircle2, Building2, UserCheck, Clock, ShieldCheck, ExternalLink, Linkedin, Youtube, MessageCircle, Star, Globe, FileText, Users } from 'lucide-react';
-import { BRAND_INFO, SOCIAL_LINKS, USEFUL_LINKS } from '../data/content';
+import { Phone, Mail, MapPin, Send, CheckCircle2, Building2, UserCheck, Clock, ShieldCheck, Linkedin, Youtube, MessageCircle, Star } from 'lucide-react';
+import { BRAND_INFO, SOCIAL_LINKS } from '../data/content';
 
 interface ContactSectionProps {
   initialMode?: string;
@@ -246,75 +246,13 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialMode = 'b
                 <strong className="text-brand-text">Hours:</strong>{' '}Mon to Sat, 9:30 AM – 6:30 PM IST
               </div>
             </div>
-          </div>
 
-        </div>
-
-        {/* Official Community & Useful Links Hub (from Linktree) */}
-        <div className="mt-12 sm:mt-16 pt-10 sm:pt-12 border-t border-brand-border">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6 sm:mb-8">
-            <div>
-              <span className="section-label">Connect & Join</span>
-              <h3 className="text-xl sm:text-2xl font-bold text-brand-navy mt-1">
-                Official Community & Useful Links
-              </h3>
-            </div>
-            <a
-              href="https://linktr.ee/visionarywomen1809"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-link text-xs sm:text-sm"
-            >
-              <span>View Official Linktree</span>
-              <ExternalLink className="w-3.5 h-3.5" />
-            </a>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            {/* Useful Links & WhatsApp Communities */}
-            <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-              {USEFUL_LINKS.map((link) => {
-                const Icon =
-                  link.platform === 'form'
-                    ? FileText
-                    : link.platform === 'whatsapp'
-                    ? Users
-                    : link.platform === 'google'
-                    ? Star
-                    : Globe;
-                return (
-                  <a
-                    key={link.id}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="card-base card-hover p-4 flex items-start space-x-3 group"
-                  >
-                    <div className="w-9 h-9 rounded-lg bg-brand-navy/8 border border-brand-navy/15 text-brand-navy group-hover:bg-brand-navy group-hover:text-white flex items-center justify-center flex-shrink-0 transition-colors">
-                      <Icon className="w-4 h-4" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center justify-between gap-2">
-                        <span className="text-xs sm:text-sm font-semibold text-brand-navy group-hover:text-brand-gold transition-colors truncate">
-                          {link.label}
-                        </span>
-                        <ExternalLink className="w-3.5 h-3.5 text-brand-muted group-hover:text-brand-gold flex-shrink-0" />
-                      </div>
-                      <p className="text-xs text-brand-muted mt-0.5 line-clamp-2">
-                        {link.description}
-                      </p>
-                    </div>
-                  </a>
-                );
-              })}
-            </div>
-
-            {/* Social Channels */}
-            <div className="lg:col-span-4 card-base p-5 space-y-3">
-              <div className="text-xs font-bold uppercase tracking-[0.12em] text-brand-muted">
-                Social & Official Channels
+            {/* Clean Official Social Channels */}
+            <div className="card-base p-4 sm:p-5 sm:col-span-2 lg:col-span-1 space-y-3">
+              <div className="text-xs font-semibold uppercase tracking-[0.1em] text-brand-muted">
+                Official Channels
               </div>
-              <div className="space-y-2">
+              <div className="flex flex-wrap gap-2">
                 {SOCIAL_LINKS.map((item) => {
                   const Icon =
                     item.platform === 'linkedin'
@@ -323,33 +261,25 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialMode = 'b
                       ? Youtube
                       : item.platform === 'whatsapp'
                       ? MessageCircle
-                      : item.platform === 'google'
-                      ? Star
-                      : Globe;
+                      : Star;
                   return (
                     <a
                       key={item.id}
                       href={item.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-between p-2.5 rounded-lg border border-brand-border hover:border-brand-navy/30 hover:bg-brand-bgAlt transition-all group"
+                      className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg border border-brand-border bg-brand-bgAlt hover:border-brand-navy hover:bg-brand-navy hover:text-white text-brand-navy text-xs font-medium transition-all"
                     >
-                      <div className="flex items-center space-x-2.5 min-w-0">
-                        <Icon className="w-4 h-4 text-brand-navy group-hover:text-brand-gold flex-shrink-0 transition-colors" />
-                        <div className="min-w-0">
-                          <div className="text-xs font-semibold text-brand-navy truncate">{item.label}</div>
-                          <div className="text-[11px] text-brand-muted truncate">{item.description}</div>
-                        </div>
-                      </div>
-                      <ExternalLink className="w-3.5 h-3.5 text-brand-muted group-hover:text-brand-gold flex-shrink-0 ml-2" />
+                      <Icon className="w-3.5 h-3.5 flex-shrink-0" />
+                      <span>{item.label}</span>
                     </a>
                   );
                 })}
               </div>
             </div>
           </div>
-        </div>
 
+        </div>
       </div>
     </section>
   );
