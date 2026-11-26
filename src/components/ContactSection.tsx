@@ -39,11 +39,34 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialMode = 'b
     return Object.keys(errs).length === 0;
   };
 
+  const buildInquirySummary = () => {
+    const typeLabel = formType === 'business' ? 'Business Enquiry' : 'Professional Network Application';
+    const lines = [
+      `*${typeLabel} — Visionary Women™*`,
+      `Name: ${formData.name}`,
+      `Email: ${formData.email}`,
+      `Phone: ${formData.phone}`,
+      formType === 'business' && formData.company ? `Company: ${formData.company}` : '',
+      formType === 'business' && formData.service ? `Service: ${formData.service}` : '',
+      formType === 'professional' && formData.qualification ? `Qualification: ${formData.qualification}` : '',
+      formType === 'professional' && formData.expertise ? `Expertise: ${formData.expertise}` : '',
+      `Message: ${formData.message}`,
+    ].filter(Boolean);
+    return lines.join('\n');
+  };
+
+  const whatsappDispatchUrl = `https://wa.me/919408967987?text=${encodeURIComponent(buildInquirySummary())}`;
+  const mailtoDispatchUrl = `mailto:${BRAND_INFO.email}?subject=${encodeURIComponent(
+    `${formType === 'business' ? 'Business Enquiry' : 'Network Application'} from ${formData.name}`
+  )}&body=${encodeURIComponent(buildInquirySummary())}`;
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
     setIsSubmitting(true);
-    setTimeout(() => { setIsSubmitting(false); setIsSubmitted(true); }, 1000);
+    window.open(whatsappDispatchUrl, '_blank', 'noopener,noreferrer');
+    setIsSubmitting(false);
+    setIsSubmitted(true);
   };
 
   const resetForm = () => {
@@ -106,13 +129,30 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialMode = 'b
                   <CheckCircle2 className="w-8 h-8" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-brand-navy">Thank you!</h3>
-                  <p className="text-sm text-brand-muted mt-2 max-w-sm mx-auto">We will get back to you within 24 business hours.</p>
+                  <h3 className="text-xl font-bold text-brand-navy">Enquiry Ready to Send!</h3>
+                  <p className="text-sm text-brand-muted mt-2 max-w-md mx-auto">
+                    Your details have been prepared for our team. If WhatsApp didn’t open automatically, use either option below to send it directly.
+                  </p>
                 </div>
-                <div className="bg-brand-bgAlt rounded-lg px-4 py-3 text-xs text-brand-muted inline-block">
-                  Response sent to <strong className="text-brand-text">{formData.email}</strong>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                  <a
+                    href={whatsappDispatchUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-gold inline-flex items-center space-x-2"
+                  >
+                    <MessageCircle className="w-4 h-4" />
+                    <span>Send via WhatsApp</span>
+                  </a>
+                  <a
+                    href={mailtoDispatchUrl}
+                    className="btn-navy-ghost inline-flex items-center space-x-2"
+                  >
+                    <Mail className="w-4 h-4" />
+                    <span>Send via Email</span>
+                  </a>
                 </div>
-                <button onClick={resetForm} className="btn-navy-ghost text-sm">Send Another Message</button>
+                <button onClick={resetForm} className="btn-link text-xs">Send Another Message</button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">

@@ -52,7 +52,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
         }`}
       >
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 lg:h-18">
+          <div className="flex items-center justify-between h-16 lg:h-20">
 
             {/* Logo */}
             <a
@@ -63,13 +63,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
               <img
                 src="/assets/vw-logo-tm.png"
                 alt="Visionary Women™ Logo"
-                className="w-9 h-9 sm:w-10 sm:h-10 object-contain flex-shrink-0"
+                className="w-11 h-11 sm:w-12 sm:h-12 min-w-[44px] object-contain flex-shrink-0"
               />
               <div className="flex flex-col leading-none min-w-0">
                 <span className="font-bold text-brand-navy text-xs sm:text-sm tracking-wide truncate flex items-start">
                   VISIONARY WOMEN<sup className="text-[9px] sm:text-[10px] font-bold text-brand-gold ml-0.5 leading-none">™</sup>
                 </span>
-                <span className="text-[9px] sm:text-[10px] text-brand-muted tracking-wider font-medium hidden xs:block">
+                <span className="text-[9px] sm:text-[10px] text-brand-muted tracking-wider font-medium hidden sm:block mt-0.5">
                   Professional Services
                 </span>
               </div>

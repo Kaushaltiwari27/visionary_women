@@ -96,7 +96,7 @@ export const WomenEmpowerment: React.FC<WomenEmpowermentProps> = ({ onOpenContac
             </p>
 
             {/* Four pillars */}
-            <div className="emp-pillars grid grid-cols-1 xs:grid-cols-2 gap-2 sm:gap-3">
+            <div className="emp-pillars grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
               {PILLARS.map((pillar, idx) => (
                 <div key={idx} className="emp-pillar card-base p-3 sm:p-4 flex items-start space-x-3 hover:shadow-card-hover transition-all duration-200">
                   <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-brand-gold/10 border border-brand-gold/20 text-brand-gold flex items-center justify-center flex-shrink-0">
@@ -111,10 +111,10 @@ export const WomenEmpowerment: React.FC<WomenEmpowermentProps> = ({ onOpenContac
             </div>
 
             {/* CTAs */}
-            <div className="flex flex-wrap gap-3 pt-1">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-3 pt-1">
               <button
                 onClick={() => onOpenContact('professional')}
-                className="btn-gold flex items-center justify-center space-x-2 w-full xs:w-auto"
+                className="btn-gold flex items-center justify-center space-x-2 w-full sm:w-auto"
               >
                 <span>Join Our Network</span>
                 <ArrowRight className="w-4 h-4" />
@@ -123,7 +123,7 @@ export const WomenEmpowerment: React.FC<WomenEmpowermentProps> = ({ onOpenContac
                 href={USEFUL_LINKS[0].url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-navy-ghost flex items-center justify-center space-x-2 w-full xs:w-auto"
+                className="btn-navy-ghost flex items-center justify-center space-x-2 w-full sm:w-auto"
               >
                 <CalendarCheck className="w-4 h-4" />
                 <span>Register for Sessions</span>

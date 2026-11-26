@@ -68,7 +68,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
             </p>
 
             {/* CTAs */}
-            <div className="hero-cta flex flex-col xs:flex-row items-stretch xs:items-center justify-center lg:justify-start gap-3">
+            <div className="hero-cta flex flex-col sm:flex-row items-stretch sm:items-center justify-center lg:justify-start gap-3">
               <button
                 onClick={() => onOpenContact('business')}
                 className="hero-cta btn-gold flex items-center justify-center space-x-2 py-3.5 px-6 sm:px-7 text-sm sm:text-base"

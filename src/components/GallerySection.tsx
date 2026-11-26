@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Maximize2, X, ChevronLeft, ChevronRight, Camera } from 'lucide-react';
 import { MEMORIES_PHOTOS } from '../data/memories';
 
@@ -13,6 +13,17 @@ export const GallerySection: React.FC = () => {
 
   const currentList = filteredPhotos.slice(0, visibleCount);
   const selectedPhoto = selectedPhotoIndex !== null ? filteredPhotos[selectedPhotoIndex] : null;
+
+  useEffect(() => {
+    if (selectedPhotoIndex === null) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSelectedPhotoIndex(null);
+      else if (e.key === 'ArrowLeft') setSelectedPhotoIndex((prev) => (prev === null ? null : (prev - 1 + filteredPhotos.length) % filteredPhotos.length));
+      else if (e.key === 'ArrowRight') setSelectedPhotoIndex((prev) => (prev === null ? null : (prev + 1) % filteredPhotos.length));
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedPhotoIndex, filteredPhotos.length]);
 
   const handlePrev = (e: React.MouseEvent) => {
     e.stopPropagation();

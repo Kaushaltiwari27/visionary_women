@@ -40,7 +40,7 @@ export const BrandIntro: React.FC<BrandIntroProps> = ({ onOpenContact }) => {
             <div className="accent-line" />
             <div className="about-paras space-y-4 text-brand-muted leading-relaxed text-sm sm:text-base">
               <p className="about-para">
-                Visionary Women is a Surat-based professional services firm led by{' '}
+                Visionary Women™ is a Surat and Pune-based professional services firm led by{' '}
                 <strong className="text-brand-text font-semibold">CA Crispee Morakhiya</strong>.
                 We provide accounting, taxation, compliance, and financial advisory services to businesses across India.
               </p>

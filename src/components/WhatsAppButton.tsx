@@ -54,7 +54,7 @@ export const WhatsAppButton: React.FC = () => {
                 </svg>
               </div>
               <div>
-                <p className="text-xs font-semibold text-brand-navy">Visionary Women</p>
+                <p className="text-xs font-semibold text-brand-navy">Visionary Women™</p>
                 <p className="text-xs text-brand-muted mt-0.5 leading-relaxed">
                   Hi! 👋 Have a question? Chat with us on WhatsApp.
                 </p>

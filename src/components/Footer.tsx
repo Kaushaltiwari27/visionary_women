@@ -193,7 +193,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/40">
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-3 gap-y-1">
-            <span>© {new Date().getFullYear()} Visionary Women. All rights reserved.</span>
+            <span>© {new Date().getFullYear()} Visionary Women™. All rights reserved.</span>
             <span className="hidden sm:inline">·</span>
             <span>Founder: {BRAND_INFO.founder.name}</span>
           </div>
